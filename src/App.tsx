@@ -92,7 +92,7 @@ function App() {
   };
 
   return (
-    <div className="">
+    <div>
       <nav
         className={`sticky top-0 shadow-lg pt-2 px-4 flex justify-between items-center bg-white z-10`}
       >

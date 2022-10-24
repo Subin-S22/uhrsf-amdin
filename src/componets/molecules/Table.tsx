@@ -168,7 +168,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     };
 
   return (
-    <TableHead>
+    <TableHead className="bg-dark_blue">
       <TableRow>
         {/* <TableCell padding="checkbox">
           <Checkbox
@@ -183,7 +183,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
         </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
-            className="font-bold"
+            className="font-medium text-white"
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
@@ -193,6 +193,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
+              className="text-white"
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -245,17 +246,16 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           variant="h6"
           id="tableTitle"
           component="div"
+          className="font-bold"
         >
           {title}
         </Typography>
       )}
-      <Tooltip title="Filter list">
-        <input
-          type="search"
-          className="border border-gray-300 py-1 focus:outline-none focus:border-blue-400 px-2 rounded-md"
-          placeholder="search..."
-        />
-      </Tooltip>
+      {/* <input
+        type="search"
+        className="border border-gray-300 py-1 focus:outline-none focus:border-blue-400 px-2 rounded-md"
+        placeholder="search..."
+      /> */}
     </Toolbar>
   );
 }
@@ -357,12 +357,7 @@ export default function EnhancedTable({ title }: { title: string }) {
                           }}
                         />
                       </TableCell> */}
-                      <TableCell
-                        component="th"
-                        id={labelId}
-                        scope="row"
-                        padding="none"
-                      >
+                      <TableCell component="th" id={labelId} scope="row">
                         {row.applicationNo}
                       </TableCell>
                       <TableCell>{row.name}</TableCell>
@@ -400,7 +395,7 @@ export default function EnhancedTable({ title }: { title: string }) {
         label="Dense padding"
       /> */}
       <Box className="flex justify-end mr-6 mb-8">
-        <Button className="bg-blue-600 text-white">View All</Button>
+        <Button className="bg-dark_blue text-white capitalize">View All</Button>
       </Box>
     </Box>
   );
