@@ -11,16 +11,14 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const isLogin = localStorage.getItem("login");
-console.log(isLogin);
-
+const isLogin = () => localStorage.getItem("login");
 root.render(
   <BrowserRouter>
     <Routes>
       <Route index path="/login" element={<Login />} />
       <Route
         path="/"
-        element={isLogin ? <App /> : <Navigate to={"/login"} />}
+        element={isLogin() ? <App /> : <Navigate to={"/login"} />}
       ></Route>
       <Route path="/application/viewall" element={<Application />}></Route>
     </Routes>
