@@ -3,17 +3,26 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./componets/pages";
+import Application from "./componets/pages/Application";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+const isLogin = localStorage.getItem("login");
+console.log(isLogin);
+
 root.render(
   <BrowserRouter>
     <Routes>
-      <Route index path="login" element={<Login />} />
-      <Route path="/" element={<App />}></Route>
+      <Route index path="/login" element={<Login />} />
+      <Route
+        path="/"
+        element={isLogin ? <App /> : <Navigate to={"/login"} />}
+      ></Route>
+      <Route path="/application/viewall" element={<Application />}></Route>
     </Routes>
   </BrowserRouter>
 );

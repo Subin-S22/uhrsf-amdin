@@ -15,6 +15,7 @@ export default function Login() {
 
   const onSubmit = (values: Initial) => {
     console.log(values);
+    localStorage.setItem("login", "logged in");
     navigate("/");
   };
   return (
