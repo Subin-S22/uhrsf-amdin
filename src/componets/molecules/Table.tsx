@@ -284,7 +284,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
   console.log("rows", rows);
 
   // let rows = data?.length ? data : ROWS;
-  const allRows = data;
+  const allRows = data?.length ? data : ROWS;
   const navigate = useNavigate();
 
   const handleRequestSort = (
@@ -305,25 +305,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
     setSelected([]);
   };
 
-  // const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-  //   const selectedIndex = selected.indexOf(name);
-  //   let newSelected: readonly string[] = [];
-
-  //   if (selectedIndex === -1) {
-  //     newSelected = newSelected.concat(selected, name);
-  //   } else if (selectedIndex === 0) {
-  //     newSelected = newSelected.concat(selected.slice(1));
-  //   } else if (selectedIndex === selected.length - 1) {
-  //     newSelected = newSelected.concat(selected.slice(0, -1));
-  //   } else if (selectedIndex > 0) {
-  //     newSelected = newSelected.concat(
-  //       selected.slice(0, selectedIndex),
-  //       selected.slice(selectedIndex + 1)
-  //     );
-  //   }
-
-  //   setSelected(newSelected);
-  // };
+  const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
+    console.log(event, obj);
+    navigate("/userManagement", { state: obj });
+  };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
@@ -382,7 +367,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.name)}
+                      onClick={(event) => handleClick(event, row)}
                       // role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}

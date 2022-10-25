@@ -3,10 +3,11 @@ import React from "react";
 import Laytout from "../molecules/Laytout";
 import Field from "../atoms/Field";
 import Button from "../atoms/Button";
+import { useLocation } from "react-router-dom";
 
 type Props = {};
 
-const initialValues = {
+let initialValues = {
   firstAndLastName: "",
   emailId: "",
   parentsName: "",
@@ -28,12 +29,11 @@ const initialValues = {
 };
 
 const UserForm = (props: Props) => {
+  const { state } = useLocation();
+
   return (
     <Laytout>
-      <Formik
-        initialValues={initialValues}
-        onSubmit={(values) => console.log(values)}
-      >
+      <Formik initialValues={state} onSubmit={(values) => console.log(values)}>
         <Form className="grid gird-cols-1 lg:grid-cols-2 m-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md">
           <h1 className="text-center font-bold text-2xl mt-8 lg:col-span-2">
             User Details
@@ -55,11 +55,11 @@ const UserForm = (props: Props) => {
           <Field name="aadharcard" label="Aadharcard" />
           <Field name="pancard" label="Pancard" />
           <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
-            <div className="flex gap-2 flex-col flex-wrap">
+            <div className="flex gap-2 flex-col flex-wrap w-full">
               <Button variant="approve">Approve</Button>
               <Button variant="reject">Reject</Button>
             </div>
-            <div className="flex gap-2 flex-col flex-wrap">
+            <div className="flex gap-2 flex-col flex-wrap w-full">
               <Button variant="executive">Executive</Button>
               <Button variant="disable">Disable</Button>
             </div>
