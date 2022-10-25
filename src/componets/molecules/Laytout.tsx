@@ -4,11 +4,11 @@ import { useLoggedIn } from "../../shared/hooks";
 import Navbar from "./Navbar";
 import SideBar from "./SideBar";
 
-type Props = {
+interface Props {
   children: React.ReactNode;
-};
+}
 
-const Laytout = ({ children }: Props) => {
+const Laytout = ({ children, ...props }: Props) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 

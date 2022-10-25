@@ -5,7 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./componets/pages";
-import Application from "./componets/pages/Application";
+import Application from "./componets/pages/ApplicationReceived";
+import ApplicationStatus from "./componets/pages/ApplicationStatus";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,7 +17,11 @@ root.render(
     <Routes>
       <Route index path="/login" element={<Login />} />
       <Route path="/" element={<App />}></Route>
-      <Route path="/application/viewall" element={<Application />}></Route>
+      <Route path="/application" element={<Application />}></Route>
+      <Route
+        path="/application/:status"
+        element={<ApplicationStatus />}
+      ></Route>
     </Routes>
   </BrowserRouter>
 );

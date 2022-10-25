@@ -3,10 +3,11 @@ import profile from "../../assets/profile.png";
 import logo from "../../assets/uhrsf_logo.png";
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   openSidebar: boolean;
-  handleSideBarClose: React.MouseEventHandler<HTMLDivElement>;
+  handleSideBarClose: () => void;
 }
 
 const sideBarOptions = [
@@ -52,23 +53,27 @@ const sideBarOptions = [
 ];
 
 const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
+  const navigate = useNavigate();
   const handleRouting = (route: string) => {
-    console.log(route);
+    if (route === "rejected" || route === "approved") {
+      navigate(`/application/${route.toUpperCase()}`);
+      handleSideBarClose();
+    }
   };
   return (
     <>
       {openSidebar ? (
         <div
-          className="backdrop-brightness-50 h-screen w-screen absolute top-0 z-[11]"
+          className="backdrop-brightness-50 h-full w-screen fixed top-0 z-[11]"
           onClick={handleSideBarClose}
         ></div>
       ) : null}
       <div
         className={`overflow-auto ${
           openSidebar ? "translate-x-0" : "translate-x-[-100%]"
-        } fixed top-0 z-[12] left-0 w-48 md:w-60 bg-dark_blue h-screen transition-all ease-in`}
+        } fixed top-0 z-[12] left-0 w-56 md:w-68 bg-dark_blue h-screen transition-all ease-in`}
       >
-        <div className="w-20 h-20 mx-auto">
+        <div className="w-20 h-20 mx-auto mt-4">
           <img src={logo} alt="logo" className="w-full h-auto" />
         </div>
         <div className="flex justify-center items-center my-4 gap-2">
@@ -83,7 +88,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
         {sideBarOptions.map((sidebar, index) => (
           <Accordion
             key={index}
-            className={`!bg-dark_blue text-white my-0 `}
+            className={`!bg-dark_blue text-white my-0 ml-2 `}
             onClick={() => handleRouting(sidebar.name)}
           >
             <AccordionSummary
@@ -101,7 +106,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
                     return (
                       <li
                         key={index}
-                        onClick={() => handleRouting(side.name)}
+                        onClick={() => handleRouting(side.value)}
                         className="text-sm font-medium text-slate-300 p-2 m-2"
                       >
                         {side.name}

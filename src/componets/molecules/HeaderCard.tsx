@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { SlPeople } from "react-icons/sl";
-import { BiTimeFive } from "react-icons/bi";
+import { BiTimeFive, BiHome } from "react-icons/bi";
 import { MdOutlineLocalPolice } from "react-icons/md";
+import { membersCount } from "../../services/admin";
+import { IconType } from "react-icons/lib";
 
 type Props = {};
 
-const cardsDetails = [
+interface Detail {
+  icon: IconType;
+  total: number;
+  name: string;
+}
+
+let cardsDetails: Detail[] = [
   {
     icon: SlPeople,
     total: 0,
@@ -21,11 +29,38 @@ const cardsDetails = [
     total: 0,
     name: "Executives Enrolled",
   },
+  {
+    icon: BiHome,
+    total: 0,
+    name: "Branches",
+  },
 ];
 const HeaderCard = (props: Props) => {
+  const [cards, setCards] = React.useState<Detail[]>(cardsDetails);
+  const fetchMembersCount = async () => {
+    try {
+      const res: any = await membersCount();
+      console.log(res.data.memberEnrolledCount);
+      const temp = cardsDetails.map((detail) => {
+        if (detail.name === "Members Enrolled") {
+          return { ...detail, total: res.data.memberEnrolledCount };
+        } else {
+          return detail;
+        }
+      });
+      setCards(temp);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchMembersCount();
+  }, []);
+
   return (
-    <div className="flex flex-wrap justify-around items-center max-w-[730px] mx-auto gap-4">
-      {cardsDetails.map((item) => {
+    <div className="flex flex-wrap justify-around items-center mx-auto gap-4">
+      {cards.map((item) => {
         return (
           <div
             key={`item-${item.name}`}

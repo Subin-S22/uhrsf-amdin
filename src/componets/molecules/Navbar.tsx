@@ -26,6 +26,7 @@ const Navbar = ({
       <div className="cursor-pointer" onClick={handleSideBarClose}>
         <GoThreeBars />
       </div>
+      <div></div>
       <div>
         <div className="flex justify-center items-center gap-2">
           <Button

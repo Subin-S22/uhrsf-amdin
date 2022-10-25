@@ -5,7 +5,7 @@ export const yetToApprove = async () => {
     const res = await baseAxios.get("/yetToApprove");
     return res;
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
@@ -14,7 +14,7 @@ export const membersCount = async () => {
     const res = await baseAxios.get("/memberEnrolledCount");
     return res;
   } catch (err) {
-    return err;
+    throw err;
   }
 };
 
@@ -23,6 +23,6 @@ export const getByStatus = async (status: string) => {
     const res = await baseAxios.get(`/detailsByStatus?status=${status}`);
     return res;
   } catch (err) {
-    return err;
+    throw err;
   }
 };
