@@ -7,6 +7,24 @@
   .inner_div_flex > div {
     @apply flex justify-between;
   }
+  .btn {
+    @apply rounded-md shadow-lg text-white px-4 py-2 min-w-[100px] text-center;
+  }
+  .btn:hover {
+    @apply brightness-50;
+  }
+  .disable {
+    @apply bg-gray-600;
+  }
+  .approve {
+    @apply bg-green-600;
+  }
+  .reject {
+    @apply bg-red-600;
+  }
+  .executive {
+    @apply bg-blue-600;
+  }
 }
 /* root variables */
 :root {

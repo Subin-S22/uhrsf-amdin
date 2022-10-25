@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Login } from "./componets/pages";
 import Application from "./componets/pages/ApplicationReceived";
 import ApplicationStatus from "./componets/pages/ApplicationStatus";
+import UserForm from "./componets/pages/UserForm";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -22,6 +23,7 @@ root.render(
         path="/application/:status"
         element={<ApplicationStatus />}
       ></Route>
+      <Route path="/userManagement" element={<UserForm />}></Route>
     </Routes>
   </BrowserRouter>
 );
