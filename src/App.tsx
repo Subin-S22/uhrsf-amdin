@@ -1,6 +1,5 @@
 import HeaderCard from "./componets/molecules/HeaderCard";
 import Laytout from "./componets/molecules/Laytout";
-import SideBar from "./componets/molecules/SideBar";
 import Table from "./componets/molecules/Table";
 import BranchTable from "./componets/molecules/BranchesTable";
 

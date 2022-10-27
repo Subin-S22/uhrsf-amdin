@@ -1,34 +1,32 @@
-import { Formik, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import React from "react";
 import Laytout from "../molecules/Laytout";
 import Field from "../atoms/Field";
 import Button from "../atoms/Button";
 import { useLocation } from "react-router-dom";
 
-type Props = {};
+// let initialValues = {
+//   firstAndLastName: "",
+//   emailId: "",
+//   parentsName: "",
+//   mobileNumber: "",
+//   dob: "",
+//   gender: "",
+//   bloodGroup: "",
+//   qualification: "",
+//   profession: "",
+//   referralId: "",
+//   referralName: "",
+//   address: "",
+//   city: "",
+//   state: "",
+//   pincode: "",
+//   nationality: "INDIAN",
+//   aadharcard: "",
+//   pancard: "",
+// };
 
-let initialValues = {
-  firstAndLastName: "",
-  emailId: "",
-  parentsName: "",
-  mobileNumber: "",
-  dob: "",
-  gender: "",
-  bloodGroup: "",
-  qualification: "",
-  profession: "",
-  referralId: "",
-  referralName: "",
-  address: "",
-  city: "",
-  state: "",
-  pincode: "",
-  nationality: "INDIAN",
-  aadharcard: "",
-  pancard: "",
-};
-
-const UserForm = (props: Props) => {
+const UserForm = () => {
   const { state } = useLocation();
 
   return (
