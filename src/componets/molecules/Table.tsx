@@ -14,7 +14,7 @@ import * as React from "react";
 import { useEffect, useCallback } from "react";
 // import DeleteIcon from "@mui/icons-material/Delete";
 // import FilterListIcon from "@mui/icons-material/FilterList";
-import { Button } from "@mui/material";
+import { Button, TablePagination } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
 
@@ -175,7 +175,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     };
 
   return (
-    <TableHead className="bg-gray-200">
+    <TableHead className="bg-gray-100">
       <TableRow>
         {headCells.map((headCell) => (
           <TableCell
@@ -189,7 +189,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
-              className="text-gray-600"
+              className="text-gray-400 font-semibold"
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -266,9 +266,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof Data>("uhrsfMemberId");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
-  const [page] = React.useState(0);
   const [dense] = React.useState(false);
-  const [rowsPerPage] = React.useState(5);
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchValue, setSearchValue] = React.useState("");
   const [rows, setRows] = React.useState<any[]>([]);
   console.log("rows", rows);
@@ -295,10 +295,20 @@ export default function EnhancedTable({ title, search, data }: Props) {
     setSelected([]);
   };
 
+  const handleChangePage = (event: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
     console.log(event, obj);
-    if (title === "Application Received")
-      navigate("/userManagement", { state: obj });
+    navigate("/userManagement", { state: obj });
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
@@ -350,7 +360,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
               {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
               {stableSort(rows, getComparator(order, orderBy))
-                .slice(0, search ? rows?.length : 3)
+                .slice(
+                  page * rowsPerPage,
+                  search ? page * rowsPerPage + rowsPerPage : 3
+                )
                 .map((row, index) => {
                   const isItemSelected = isSelected(`${row.firstAndLastName}`);
                   const labelId = `enhanced-table-checkbox-${index}`;
@@ -362,6 +375,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
+                      className="hover:bg-gray-100 cursor-pointer"
                     >
                       <TableCell component="th" id={labelId} scope="row">
                         {row.uhrsfMemberId}
@@ -386,30 +400,34 @@ export default function EnhancedTable({ title, search, data }: Props) {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[5, 10, 25]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        /> */}
+        {search && (
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
       </Paper>
       {/* <FormControlLabel
         control={<Switch checked={dense} onChange={handleChangeDense} />}
         label="Dense padding"
       /> */}
-      <Box className="flex justify-end mr-6 mb-8">
-        <Button
-          className="bg-dark_blue text-white capitalize"
-          onClick={() => {
-            if (title === "Application Received") navigate("/application");
-          }}
-        >
-          View All
-        </Button>
-      </Box>
+      {!search && (
+        <Box className="flex justify-end mr-6 mb-8">
+          <Button
+            className="bg-dark_blue text-white capitalize"
+            onClick={() => {
+              if (title === "Application Received") navigate("/application");
+            }}
+          >
+            View All
+          </Button>
+        </Box>
+      )}
     </Box>
   );
 }

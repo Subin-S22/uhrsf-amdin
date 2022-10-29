@@ -28,13 +28,12 @@ import { useLocation } from "react-router-dom";
 
 const UserForm = () => {
   const { state } = useLocation();
-
   return (
     <Laytout>
       <Formik initialValues={state} onSubmit={(values) => console.log(values)}>
         <Form className="grid gird-cols-1 lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
-          <h1 className="text-center font-bold text-2xl mt-8 lg:col-span-2">
-            User Details
+          <h1 className="font-bold text-2xl mt-2 mb-4 lg:col-span-2">
+            User Informations
           </h1>
           <Field name="firstAndLastName" label="First and last name" />
           <Field name="email" label="Email address" />
@@ -52,15 +51,25 @@ const UserForm = () => {
           <Field name="pincode" label="Pincode" />
           <Field name="aadharcard" label="Aadharcard" />
           <Field name="pancard" label="Pancard" />
+          <div>
+            <label>Aadharcard Photo</label>
+            <img src={""} alt="aadharcard" />
+          </div>
+          <div>
+            <label>Pancard Photo</label>
+            <img src={""} alt="aadharcard" />
+          </div>
+          <div>
+            <label>Profile Photo</label>
+            <img src={""} alt="aadharcard" />
+          </div>
           <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
-            <div className="flex gap-2 flex-col flex-wrap w-full">
-              <Button variant="approve">Approve</Button>
-              <Button variant="reject">Reject</Button>
-            </div>
-            <div className="flex gap-2 flex-col flex-wrap w-full">
-              <Button variant="executive">Executive</Button>
-              <Button variant="disable">Disable</Button>
-            </div>
+            <Button variant="disable">Back</Button>
+            <Button variant="edit">Edit</Button>
+            <Button variant="approve">Approve</Button>
+            <Button variant="reject">Reject</Button>
+            <Button variant="executive">Executive</Button>
+            <Button variant="disable">Disable</Button>
           </div>
         </Form>
       </Formik>

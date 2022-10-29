@@ -3,6 +3,7 @@ import profile from "../../assets/profile.png";
 import logo from "../../assets/uhrsf_logo.png";
 import { FiChevronDown } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import useWindowDimensions from "../../shared/hooks/useWindowDimensions";
 
 interface Props {
   openSidebar: boolean;
@@ -38,6 +39,10 @@ const sideBarOptions = [
         name: "List Members",
         value: "members",
       },
+      {
+        name: "Disabled Members",
+        value: "disabled members",
+      },
     ],
   },
   {
@@ -49,31 +54,55 @@ const sideBarOptions = [
       },
     ],
   },
+  {
+    name: "User Management",
+    sub: [
+      {
+        name: "Add User",
+        value: "add-user",
+      },
+    ],
+  },
 ];
 
 const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
+  const { width } = useWindowDimensions();
   const navigate = useNavigate();
+
+  const sideBarAction = () => {
+    if (width < 1000) {
+      handleSideBarClose();
+    }
+  };
   const handleRouting = (route: string) => {
     switch (route) {
       case "dashboard":
         navigate(`/${route}`);
-        handleSideBarClose();
+        sideBarAction();
         break;
       case "rejected":
         navigate(`/application/${route}`);
-        handleSideBarClose();
+        sideBarAction();
         break;
       case "approved":
         navigate(`/application/${route}`);
-        handleSideBarClose();
+        sideBarAction();
         break;
       case "members":
         navigate(`/application/${route}`);
-        handleSideBarClose();
+        sideBarAction();
         break;
       case "executives":
         navigate(`/application/${route}`);
-        handleSideBarClose();
+        sideBarAction();
+        break;
+      case "disabled members":
+        navigate(`/application/${route}`);
+        sideBarAction();
+        break;
+      case "add-user":
+        navigate(`/application/${route}`);
+        sideBarAction();
         break;
       default:
     }
@@ -82,15 +111,21 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
     <>
       {openSidebar ? (
         <div
-          className="backdrop-brightness-50 h-full w-screen fixed top-0 z-[11]"
+          className="lg:hidden backdrop-brightness-50 h-full w-screen fixed top-0 z-[11]"
           onClick={handleSideBarClose}
         ></div>
       ) : null}
       <div
         className={`overflow-auto ${
-          openSidebar ? "translate-x-0" : "translate-x-[-100%]"
-        } fixed top-0 z-[12] left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in`}
+          openSidebar ? "lg:translate-x-0" : "translate-x-[-100%]"
+        } fixed top-0 lg:top-[66px] z-[12] lg:-translate-y-16 left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in`}
       >
+        <div
+          onClick={handleSideBarClose}
+          className="text-white lg:hidden p-4 float-right"
+        >
+          X
+        </div>
         <div className="w-20 h-20 mx-auto mt-4">
           <img src={logo} alt="logo" className="w-full h-auto" />
         </div>
@@ -105,7 +140,10 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
         </div>
         <li
           className="text-base cursor-pointer font-medium text-white p-2 m-2"
-          onClick={() => handleRouting("dashboard")}
+          onClick={() => {
+            handleRouting("dashboard");
+            sideBarAction();
+          }}
         >
           Dashboard
         </li>

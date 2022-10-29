@@ -9,14 +9,13 @@ interface Props {
 }
 
 const Laytout = ({ children, ...props }: Props) => {
-  const [openSidebar, setOpenSidebar] = useState(false);
+  const [openSidebar, setOpenSidebar] = useState(true);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const navigate = useNavigate();
   const open = Boolean(anchorEl);
 
   const { isLoggedIn } = useLoggedIn();
-  console.log("is logged in", isLoggedIn);
 
   if (!isLoggedIn) {
     navigate("/login");
@@ -34,7 +33,7 @@ const Laytout = ({ children, ...props }: Props) => {
   };
 
   return (
-    <main className="bg-slate-100">
+    <main className="bg-slate-100 h-full">
       <Navbar
         handleClick={handleClick}
         handleClose={handleClose}
@@ -42,12 +41,11 @@ const Laytout = ({ children, ...props }: Props) => {
         anchorEl={anchorEl}
         open={open}
       />
-
       <SideBar
         openSidebar={openSidebar}
         handleSideBarClose={handleSideBarClose}
       />
-      <div className="py-4">{children}</div>
+      <div className="py-4 lg:ml-80 bg-slate-100">{children}</div>
     </main>
   );
 };

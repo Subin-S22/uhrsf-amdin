@@ -59,7 +59,7 @@ const HeaderCard = (props: Props) => {
   }, []);
 
   return (
-    <div className="flex flex-wrap justify-around items-center mx-auto gap-4">
+    <div className="flex flex-wrap justify-center items-center mx-auto gap-8">
       {cards.map((item) => {
         return (
           <div
