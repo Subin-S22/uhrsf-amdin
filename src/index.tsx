@@ -24,7 +24,7 @@ root.render(
         path="/application/:status"
         element={<ApplicationStatus />}
       ></Route>
-      <Route path="/userManagement" element={<UserForm />}></Route>
+      <Route path="/application/add-user" element={<UserForm />}></Route>
     </Routes>
   </BrowserRouter>
 );
