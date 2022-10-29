@@ -32,7 +32,7 @@ const UserForm = () => {
   return (
     <Laytout>
       <Formik initialValues={state} onSubmit={(values) => console.log(values)}>
-        <Form className="grid gird-cols-1 lg:grid-cols-2 m-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md">
+        <Form className="grid gird-cols-1 lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
           <h1 className="text-center font-bold text-2xl mt-8 lg:col-span-2">
             User Details
           </h1>

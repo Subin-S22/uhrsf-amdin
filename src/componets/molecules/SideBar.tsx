@@ -1,7 +1,6 @@
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import profile from "../../assets/profile.png";
 import logo from "../../assets/uhrsf_logo.png";
-import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +36,7 @@ const sideBarOptions = [
     sub: [
       {
         name: "List Members",
-        value: "viewAll",
+        value: "members",
       },
     ],
   },
@@ -46,7 +45,7 @@ const sideBarOptions = [
     sub: [
       {
         name: "List Executives",
-        value: "viewAll",
+        value: "executives",
       },
     ],
   },
@@ -55,9 +54,28 @@ const sideBarOptions = [
 const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
   const navigate = useNavigate();
   const handleRouting = (route: string) => {
-    if (route === "rejected" || route === "approved") {
-      navigate(`/application/${route.toUpperCase()}`);
-      handleSideBarClose();
+    switch (route) {
+      case "dashboard":
+        navigate(`/${route}`);
+        handleSideBarClose();
+        break;
+      case "rejected":
+        navigate(`/application/${route}`);
+        handleSideBarClose();
+        break;
+      case "approved":
+        navigate(`/application/${route}`);
+        handleSideBarClose();
+        break;
+      case "members":
+        navigate(`/application/${route}`);
+        handleSideBarClose();
+        break;
+      case "executives":
+        navigate(`/application/${route}`);
+        handleSideBarClose();
+        break;
+      default:
     }
   };
   return (
@@ -71,7 +89,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       <div
         className={`overflow-auto ${
           openSidebar ? "translate-x-0" : "translate-x-[-100%]"
-        } fixed top-0 z-[12] left-0 w-56 md:w-68 bg-dark_blue h-screen transition-all ease-in`}
+        } fixed top-0 z-[12] left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in`}
       >
         <div className="w-20 h-20 mx-auto mt-4">
           <img src={logo} alt="logo" className="w-full h-auto" />
@@ -85,7 +103,13 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
             <p className="text-white text-sm">admin@admin.com</p>
           </div>
         </div>
-        {sideBarOptions.map((sidebar, index) => (
+        <li
+          className="text-base cursor-pointer font-medium text-white p-2 m-2"
+          onClick={() => handleRouting("dashboard")}
+        >
+          Dashboard
+        </li>
+        {sideBarOptions.slice(1).map((sidebar, index) => (
           <Accordion
             key={index}
             className={`!bg-dark_blue text-white my-0 ml-2 `}

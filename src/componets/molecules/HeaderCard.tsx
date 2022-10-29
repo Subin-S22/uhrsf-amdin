@@ -64,7 +64,7 @@ const HeaderCard = (props: Props) => {
         return (
           <div
             key={`item-${item.name}`}
-            className="shadow-[1px_2px_6px_1px_#cdcdcd] rounded-md p-4 min-w-[14rem]"
+            className="shadow-[1px_2px_6px_1px_#cdcdcd] rounded-md p-4 min-w-[14rem] bg-white"
           >
             {<item.icon className="text-3xl" />}
             <div className="text-center textlg font-semibold">{item.total}</div>

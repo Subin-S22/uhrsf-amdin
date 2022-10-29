@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getByStatus } from "../../services/admin";
 import Laytout from "../molecules/Laytout";
 import CustTable from "../molecules/Table";
@@ -8,14 +8,14 @@ type Props = {};
 
 const ApplicationStatus = (props: Props) => {
   const [received, setReceived] = useState([]);
-  const location = useLocation();
-  const { pathname } = location;
-  const status = pathname.split("/")[2];
+  const { status } = useParams();
 
   const fetchApplicationStatus = useCallback(async () => {
     try {
-      const res = await getByStatus(status);
-      setReceived(res.data.data);
+      if (status) {
+        const res = await getByStatus(status);
+        setReceived(res.data.data);
+      }
     } catch (err) {
       console.log(err);
     }

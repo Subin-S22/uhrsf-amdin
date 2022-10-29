@@ -34,7 +34,7 @@ const Laytout = ({ children, ...props }: Props) => {
   };
 
   return (
-    <main>
+    <main className="bg-slate-100">
       <Navbar
         handleClick={handleClick}
         handleClose={handleClose}
@@ -47,7 +47,7 @@ const Laytout = ({ children, ...props }: Props) => {
         openSidebar={openSidebar}
         handleSideBarClose={handleSideBarClose}
       />
-      {children}
+      <div className="py-4">{children}</div>
     </main>
   );
 };

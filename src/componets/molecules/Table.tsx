@@ -175,22 +175,11 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     };
 
   return (
-    <TableHead className="bg-dark_blue">
+    <TableHead className="bg-gray-200">
       <TableRow>
-        {/* <TableCell padding="checkbox">
-          <Checkbox
-            color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-            checked={rowCount > 0 && numSelected === rowCount}
-            onChange={onSelectAllClick}
-            inputProps={{
-              "aria-label": "select all desserts",
-            }}
-          />
-        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
-            className="font-medium text-white"
+            className="font-medium text-black"
             key={headCell.id}
             align={headCell.numeric ? "right" : "left"}
             padding={headCell.disablePadding ? "none" : "normal"}
@@ -200,7 +189,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : "asc"}
               onClick={createSortHandler(headCell.id)}
-              className="text-white"
+              className="text-gray-600"
             >
               {headCell.label}
               {orderBy === headCell.id ? (
@@ -239,6 +228,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
             ),
         }),
       }}
+      className="flex flex-wrap sm:flex-nowrap justify-center sm:justify-between items-center gap-4"
     >
       {numSelected > 0 ? (
         <Typography
@@ -255,7 +245,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           variant="h6"
           id="tableTitle"
           component="div"
-          className="font-bold"
+          className="font-bold text-center sm:text-left"
         >
           {title}
         </Typography>
@@ -263,7 +253,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       {search && (
         <input
           type="search"
-          className="border border-gray-300 py-1 focus:outline-none focus:border-blue-400 px-2 rounded-md"
+          className="border border-gray-300 py-1 flex-1 focus:outline-none mb-2 focus:border-blue-400 px-2 rounded-md"
           placeholder="search..."
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -307,7 +297,8 @@ export default function EnhancedTable({ title, search, data }: Props) {
 
   const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
     console.log(event, obj);
-    navigate("/userManagement", { state: obj });
+    if (title === "Application Received")
+      navigate("/userManagement", { state: obj });
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
@@ -368,21 +359,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
                     <TableRow
                       hover
                       onClick={(event) => handleClick(event, row)}
-                      // role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
-                      // selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell> */}
                       <TableCell component="th" id={labelId} scope="row">
                         {row.uhrsfMemberId}
                       </TableCell>
