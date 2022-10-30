@@ -8,15 +8,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import TableSortLabel from "@mui/material/TableSortLabel";
+import TableFooter from "@mui/material/TableFooter";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useEffect, useCallback } from "react";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import FilterListIcon from "@mui/icons-material/FilterList";
 import { Button, TablePagination } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
+import MyButton from "../atoms/Button";
+import exportFromJSON from "export-from-json";
 
 interface Props {
   title: string;
@@ -271,7 +272,6 @@ export default function EnhancedTable({ title, search, data }: Props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchValue, setSearchValue] = React.useState("");
   const [rows, setRows] = React.useState<any[]>([]);
-  console.log("rows", rows);
 
   // let rows = data?.length ? data : ROWS;
   const allRows = data?.length ? data : ROWS;
@@ -308,7 +308,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
 
   const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
     console.log(event, obj);
-    navigate("/userManagement", { state: obj });
+    navigate("/application/add-user", { state: obj });
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
@@ -371,13 +371,17 @@ export default function EnhancedTable({ title, search, data }: Props) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row)}
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
-                      className="hover:bg-gray-100 cursor-pointer"
+                      className="hover:bg-gray-100"
                     >
-                      <TableCell component="th" id={labelId} scope="row">
+                      <TableCell
+                        onClick={(event) => handleClick(event, row)}
+                        component="th"
+                        id={labelId}
+                        className="hover:text-blue-500 cursor-pointer"
+                      >
                         {row.uhrsfMemberId}
                       </TableCell>
                       <TableCell>{row.firstAndLastName}</TableCell>
@@ -398,6 +402,21 @@ export default function EnhancedTable({ title, search, data }: Props) {
                 </TableRow>
               )}
             </TableBody>
+            <TableFooter className="p-2">
+              <MyButton
+                variant="approve"
+                onClick={() =>
+                  exportFromJSON({
+                    data: rows,
+                    fileName: "demo",
+                    exportType: exportFromJSON.types.csv,
+                  })
+                }
+                className="mt-4"
+              >
+                Export to CSV
+              </MyButton>
+            </TableFooter>
           </Table>
         </TableContainer>
         {search && (

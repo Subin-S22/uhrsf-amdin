@@ -118,7 +118,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       <div
         className={`overflow-auto ${
           openSidebar ? "lg:translate-x-0" : "translate-x-[-100%]"
-        } fixed top-0 lg:top-[66px] z-[12] lg:-translate-y-16 left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in`}
+        } fixed top-0 lg:top-[66px] z-[12] lg:-translate-y-16 left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in-out`}
       >
         <div
           onClick={handleSideBarClose}
