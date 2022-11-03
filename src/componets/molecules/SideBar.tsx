@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import profile from "../../assets/profile.png";
 import logo from "../../assets/uhrsf_logo.png";
 import { FiChevronDown } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useWindowDimensions from "../../shared/hooks/useWindowDimensions";
+import { Context } from "../../context";
 
 interface Props {
   openSidebar: boolean;
@@ -63,18 +65,28 @@ const sideBarOptions = [
       },
     ],
   },
+  {
+    name: "Branch Manage",
+    sub: [
+      {
+        name: "Add branch",
+        value: "add-branch",
+      },
+    ],
+  },
 ];
 
 const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
+  const context = useContext(Context);
 
   const sideBarAction = () => {
     if (width < 1000) {
       handleSideBarClose();
     }
   };
-  const handleRouting = (route: string) => {
+  const handleRouting = (route: string, name?: string) => {
     switch (route) {
       case "dashboard":
         navigate(`/${route}`);
@@ -83,24 +95,33 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       case "rejected":
         navigate(`/application/${route}`);
         sideBarAction();
+        context?.action.setTableName("Application Rejected");
         break;
       case "approved":
         navigate(`/application/${route}`);
         sideBarAction();
+        context?.action.setTableName("Application Approved");
         break;
       case "members":
         navigate(`/application/${route}`);
         sideBarAction();
+        context?.action.setTableName("Members");
         break;
       case "executives":
         navigate(`/application/${route}`);
         sideBarAction();
+        context?.action.setTableName("Executives");
         break;
       case "disabled members":
         navigate(`/application/${route}`);
         sideBarAction();
+        context?.action.setTableName("Disabled Members");
         break;
       case "add-user":
+        navigate(`/application/${route}`);
+        sideBarAction();
+        break;
+      case "add-branch":
         navigate(`/application/${route}`);
         sideBarAction();
         break;
@@ -118,7 +139,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       <div
         className={`overflow-auto ${
           openSidebar ? "lg:translate-x-0" : "translate-x-[-100%]"
-        } fixed top-0 lg:top-[66px] z-[12] lg:-translate-y-16 left-0 w-56 md:w-80 bg-dark_blue h-screen transition-all ease-in-out`}
+        } fixed top-0 lg:top-[66px] z-[12] lg:-translate-y-16 left-0 w-56 md:w-72 bg-dark_blue h-screen transition-all ease-in-out`}
       >
         <div
           onClick={handleSideBarClose}
@@ -168,8 +189,8 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
                     return (
                       <li
                         key={index}
-                        onClick={() => handleRouting(side.value)}
-                        className="text-sm font-medium text-slate-300 p-2 m-2"
+                        onClick={() => handleRouting(side.value, side.name)}
+                        className="text-sm font-medium text-slate-300 p-2 m-2 cursor-pointer"
                       >
                         {side.name}
                       </li>

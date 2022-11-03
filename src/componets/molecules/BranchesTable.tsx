@@ -12,8 +12,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useEffect, useCallback } from "react";
-// import DeleteIcon from "@mui/icons-material/Delete";
-// import FilterListIcon from "@mui/icons-material/FilterList";
 import { Button, TablePagination } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
@@ -30,33 +28,6 @@ interface Data {
   city: string;
   branchName: string;
 }
-
-const ROWS: Data[] = [
-  {
-    branchCode: "adsf",
-    state: "sdfl",
-    city: "adfkj",
-    branchName: "alskjf",
-  },
-  {
-    branchCode: "bdsf",
-    state: "sdfl",
-    city: "adfkj",
-    branchName: "alskjf",
-  },
-  {
-    branchCode: "cdsf",
-    state: "sdfl",
-    city: "adfkj",
-    branchName: "alskjf",
-  },
-  {
-    branchCode: "ddsf",
-    state: "sdfl",
-    city: "adfkj",
-    branchName: "alskjf",
-  },
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -245,12 +216,12 @@ export default function EnhancedTable({ title, search, data }: Props) {
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [dense] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
-  const [rows, setRows] = React.useState(ROWS);
+  const [rows, setRows] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
   // let rows = data?.length ? data : ROWS;
-  const allRows = data?.length ? data : ROWS;
+  const allRows = data;
   const navigate = useNavigate();
 
   const handleRequestSort = (
@@ -264,7 +235,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
-      const newSelected = rows.map((n) => n.branchName);
+      const newSelected = rows.map((n: any) => n.branchName);
       setSelected(newSelected);
       return;
     }
@@ -308,9 +279,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
     page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
   const filterData = useCallback(() => {
-    if (searchValue === "") setRows(allRows);
+    if (searchValue === "") setRows(allRows as any);
     else {
-      const temp = allRows.filter((row) => {
+      const temp: any = allRows?.filter((row) => {
         return row.firstAndLastName.includes(searchValue);
       });
       console.log(temp);
@@ -361,22 +332,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
                   return (
                     <TableRow
                       hover
-                      // onClick={(event) => handleClick(event, row.name)}
-                      // role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
-                      // selected={isItemSelected}
                     >
-                      {/* <TableCell padding="checkbox">
-                        <Checkbox
-                          color="primary"
-                          checked={isItemSelected}
-                          inputProps={{
-                            "aria-labelledby": labelId,
-                          }}
-                        />
-                      </TableCell> */}
                       <TableCell component="th" id={labelId} scope="row">
                         {row.branchCode}
                       </TableCell>

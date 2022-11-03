@@ -2,12 +2,13 @@ import React from "react";
 
 interface Props
   extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLDivElement>,
-    HTMLDivElement
+    React.HTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
   > {
   variant: "disable" | "approve" | "reject" | "executive" | "edit";
   children: React.ReactNode;
   isVisible?: boolean;
+  type?: "submit" | "button";
 }
 
 const Button = ({
@@ -15,15 +16,17 @@ const Button = ({
   children,
   isVisible = true,
   className,
+  type = "button",
   ...props
 }: Props) => {
   return (
-    <div
+    <button
       className={`${variant} btn ${isVisible ? "" : "hidden"} ${className}`}
       {...props}
+      type={type}
     >
       {children}
-    </div>
+    </button>
   );
 };
 

@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const Laytout = ({ children, ...props }: Props) => {
+const Laytout = ({ children }: Props) => {
   const [openSidebar, setOpenSidebar] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const { width } = useWindowDimensions();

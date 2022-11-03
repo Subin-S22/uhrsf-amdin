@@ -26,3 +26,12 @@ export const getByStatus = async (status: string) => {
     throw err;
   }
 };
+
+export const getYettoApprove = async () => {
+  try {
+    const res = await baseAxios.get("/yetToApprove");
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

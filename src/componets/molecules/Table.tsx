@@ -18,6 +18,8 @@ import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
 import MyButton from "../atoms/Button";
 import exportFromJSON from "export-from-json";
+import { AiFillEye } from "react-icons/ai";
+import { Context } from "../../context";
 
 interface Props {
   title: string;
@@ -33,41 +35,6 @@ interface Data {
   dob: string;
   uhrsfMemberId: string;
 }
-
-const ROWS: Data[] = [
-  {
-    firstAndLastName: "bdsf",
-    view: "asdfj",
-    state: "sdfl",
-    city: "adfkj",
-    dob: "asdlkfj",
-    uhrsfMemberId: "alskjf",
-  },
-  {
-    firstAndLastName: "adsf",
-    view: "asdfj",
-    state: "sdfl",
-    city: "adfkj",
-    dob: "asdlkfj",
-    uhrsfMemberId: "alskjf",
-  },
-  {
-    firstAndLastName: "cdsf",
-    view: "asdfj",
-    state: "sdfl",
-    city: "adfkj",
-    dob: "asdlkfj",
-    uhrsfMemberId: "alskjf",
-  },
-  {
-    firstAndLastName: "ddsf",
-    view: "asdfj",
-    state: "sdfl",
-    city: "adfkj",
-    dob: "asdlkfj",
-    uhrsfMemberId: "alskjf",
-  },
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
@@ -272,9 +239,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [searchValue, setSearchValue] = React.useState("");
   const [rows, setRows] = React.useState<any[]>([]);
+  const store = React.useContext(Context);
 
   // let rows = data?.length ? data : ROWS;
-  const allRows = data?.length ? data : ROWS;
+  const allRows = data;
   const navigate = useNavigate();
 
   const handleRequestSort = (
@@ -308,7 +276,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
 
   const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
     console.log(event, obj);
-    navigate("/application/add-user", { state: obj });
+
+    store?.action.setUserDetails(obj);
+    navigate("/application/add-user");
   };
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
@@ -388,7 +358,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       <TableCell>{row.state}</TableCell>
                       <TableCell>{row.city}</TableCell>
                       <TableCell>{row.dob}</TableCell>
-                      <TableCell>{row.view}</TableCell>
+                      <TableCell onClick={(event) => handleClick(event, row)}>
+                        <AiFillEye />
+                      </TableCell>
                     </TableRow>
                   );
                 })}
@@ -402,20 +374,22 @@ export default function EnhancedTable({ title, search, data }: Props) {
                 </TableRow>
               )}
             </TableBody>
-            <TableFooter className="p-2">
-              <MyButton
-                variant="approve"
-                onClick={() =>
-                  exportFromJSON({
-                    data: rows,
-                    fileName: "demo",
-                    exportType: exportFromJSON.types.csv,
-                  })
-                }
-                className="mt-4"
-              >
-                Export to CSV
-              </MyButton>
+            <TableFooter>
+              {search && (
+                <MyButton
+                  variant="approve"
+                  onClick={() =>
+                    exportFromJSON({
+                      data: rows,
+                      fileName: "demo",
+                      exportType: exportFromJSON.types.csv,
+                    })
+                  }
+                  className="mt-4 ml-4 text-sm w-fit"
+                >
+                  Export to CSV
+                </MyButton>
+              )}
             </TableFooter>
           </Table>
         </TableContainer>
