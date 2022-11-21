@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { branchList, yetToApprove } from "../../services/admin";
+import { branchList } from "../../services/admin";
 import Laytout from "../molecules/Laytout";
 import CustTable from "../molecules/BranchesTable";
 

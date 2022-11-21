@@ -15,7 +15,6 @@ import { useEffect, useCallback } from "react";
 import { Button, TablePagination } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
-import App from "../../App";
 import { Context } from "../../context";
 
 interface Props {

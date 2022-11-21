@@ -13,7 +13,6 @@ import {
 } from "../../services/admin";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { getMenuItemUnstyledUtilityClass } from "@mui/base";
 
 // let initialValues = {
 //   firstAndLastName: "",
@@ -119,6 +118,7 @@ const UserForm = () => {
     if (store?.data.userDetails?.uhrsfMemberId) {
       getMemberDetails(store?.data.userDetails.uhrsfMemberId);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [store?.data.userDetails]);
 
   const handleReferral = async (
