@@ -19,10 +19,6 @@ const Laytout = ({ children }: Props) => {
 
   const { isLoggedIn } = useLoggedIn();
 
-  if (!isLoggedIn) {
-    navigate("/login");
-  }
-
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -42,6 +38,14 @@ const Laytout = ({ children }: Props) => {
     }
   }, [width]);
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      console.log(isLoggedIn);
+
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate]);
+
   return (
     <main className="bg-slate-100 h-full">
       <Navbar
@@ -55,7 +59,7 @@ const Laytout = ({ children }: Props) => {
         openSidebar={openSidebar}
         handleSideBarClose={handleSideBarClose}
       />
-      <div className="py-4 lg:ml-80 bg-slate-100">{children}</div>
+      <div className="py-4 lg:ml-72 bg-slate-100">{children}</div>
     </main>
   );
 };

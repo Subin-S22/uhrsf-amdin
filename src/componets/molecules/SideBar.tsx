@@ -52,7 +52,7 @@ const sideBarOptions = [
     sub: [
       {
         name: "List Executives",
-        value: "executives",
+        value: "executive",
       },
     ],
   },
@@ -72,6 +72,10 @@ const sideBarOptions = [
         name: "Add branch",
         value: "add-branch",
       },
+      {
+        name: "Branch List",
+        value: "branches",
+      },
     ],
   },
 ];
@@ -79,7 +83,7 @@ const sideBarOptions = [
 const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
   const { width } = useWindowDimensions();
   const navigate = useNavigate();
-  const context = useContext(Context);
+  const store = useContext(Context);
 
   const sideBarAction = () => {
     if (width < 1000) {
@@ -89,41 +93,53 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
   const handleRouting = (route: string, name?: string) => {
     switch (route) {
       case "dashboard":
-        navigate(`/${route}`);
         sideBarAction();
+        navigate(`/${route}`);
+        break;
+      case "viewAll":
+        sideBarAction();
+        store?.action.setTableName("Appliations");
+        navigate(`/application/view-all`);
         break;
       case "rejected":
-        navigate(`/application/${route}`);
         sideBarAction();
-        context?.action.setTableName("Application Rejected");
+        store?.action.setTableName("Application Rejected");
+        navigate(`/application/${route}`);
         break;
       case "approved":
-        navigate(`/application/${route}`);
         sideBarAction();
-        context?.action.setTableName("Application Approved");
+        store?.action.setTableName("Application Approved");
+        navigate(`/application/${route}`);
         break;
       case "members":
-        navigate(`/application/${route}`);
         sideBarAction();
-        context?.action.setTableName("Members");
+        store?.action.setTableName("Members");
+        navigate(`/application/${route}`);
         break;
-      case "executives":
-        navigate(`/application/${route}`);
+      case "executive":
+        store?.action.setTableName("Executives");
         sideBarAction();
-        context?.action.setTableName("Executives");
+        navigate(`/application/${route}`);
         break;
       case "disabled members":
-        navigate(`/application/${route}`);
+        store?.action.setTableName("Disabled Members");
         sideBarAction();
-        context?.action.setTableName("Disabled Members");
+        navigate(`/application/${route}`);
         break;
       case "add-user":
-        navigate(`/application/${route}`);
+        store?.action.setTitle("AddUser");
+        store?.action.setUserDetails({});
         sideBarAction();
+        navigate(`/application/${route}`);
         break;
       case "add-branch":
-        navigate(`/application/${route}`);
         sideBarAction();
+        navigate(`/application/${route}`);
+        break;
+      case "branches":
+        store?.action.setTableName("Branch List");
+        sideBarAction();
+        navigate(`/application/${route}`);
         break;
       default:
     }

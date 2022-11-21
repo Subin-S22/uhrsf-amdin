@@ -274,9 +274,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, obj: any) => {
-    console.log(event, obj);
-
+    store?.action.setTitle(title);
     store?.action.setUserDetails(obj);
+
     navigate("/application/add-user");
   };
 
@@ -301,6 +301,8 @@ export default function EnhancedTable({ title, search, data }: Props) {
   useEffect(() => {
     filterData();
   }, [filterData, searchValue]);
+
+  console.log(title);
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -413,7 +415,10 @@ export default function EnhancedTable({ title, search, data }: Props) {
           <Button
             className="bg-dark_blue text-white capitalize"
             onClick={() => {
+              store?.action.setTableName(title);
+
               if (title === "Application Received") navigate("/application");
+              else if (title === "Members") navigate("/application/members");
             }}
           >
             View All

@@ -1,12 +1,12 @@
-import { Field } from "formik";
+import { Field, FieldAttributes } from "formik";
 import { Error } from "../atoms";
 
-interface Props {
+interface Props extends FieldAttributes<any> {
   name: string;
   label: string;
 }
 
-function FormControl({ label, name }: Props) {
+function FormControl({ label, name, ...props }: Props) {
   return (
     <div className="mb-4 w-full">
       <label
@@ -17,6 +17,7 @@ function FormControl({ label, name }: Props) {
       </label>
       <Field
         name={name}
+        {...props}
         className="border p-2 border-gray-400 rounded-md w-full  focus:outline-blue-400"
       />
       <Error name={name} />

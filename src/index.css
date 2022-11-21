@@ -8,9 +8,12 @@
     @apply flex justify-between;
   }
   .btn {
-    @apply rounded-md bg-white shadow-lg px-4 py-2 min-w-[100px] text-center text-lg;
+    @apply bg-dark_blue text-white shadow-lg px-4 py-2 min-w-[100px] text-center text-base font-medium;
   }
-  .disable {
+  .btn:hover {
+    opacity: 0.9;
+  }
+  /* .disable {
     @apply text-gray-600 border border-gray-600;
   }
   .approve {
@@ -26,10 +29,10 @@
     @apply text-blue-600 border border-blue-600;
   }
   .disable:hover {
-    @apply bg-gray-600 text-white border border-gray-600;
+    @apply bg-dark_blue text-white border border-gray-600;
   }
   .approve:hover {
-    @apply bg-green-600 text-white border border-green-600;
+    @apply bg-dark_blue text-white border border-green-600;
   }
   .edit:hover {
     @apply bg-yellow-600 text-white border border-yellow-600;
@@ -39,7 +42,7 @@
   }
   .executive:hover {
     @apply bg-blue-600 text-white border border-blue-600;
-  }
+  } */
 }
 /* root variables */
 :root {

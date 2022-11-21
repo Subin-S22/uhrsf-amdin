@@ -5,7 +5,14 @@ interface Props
     React.HTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
-  variant: "disable" | "approve" | "reject" | "executive" | "edit";
+  variant?:
+    | "disable"
+    | "approve"
+    | "reject"
+    | "executive"
+    | "edit"
+    | "save"
+    | "enable";
   children: React.ReactNode;
   isVisible?: boolean;
   type?: "submit" | "button";

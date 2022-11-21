@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { SlPeople } from "react-icons/sl";
 import { BiTimeFive, BiHome } from "react-icons/bi";
 import { MdOutlineLocalPolice } from "react-icons/md";
 import { membersCount } from "../../services/admin";
 import { IconType } from "react-icons/lib";
 
-type Props = {};
+type Props = {
+  applicationCount: number;
+};
 
 interface Detail {
   icon: IconType;
@@ -37,13 +39,16 @@ let cardsDetails: Detail[] = [
 ];
 const HeaderCard = (props: Props) => {
   const [cards, setCards] = React.useState<Detail[]>(cardsDetails);
-  const fetchMembersCount = async () => {
+
+  const fetchMembersCount = useCallback(async () => {
     try {
       const res: any = await membersCount();
       console.log(res.data.memberEnrolledCount);
-      const temp = cardsDetails.map((detail) => {
+      const temp = cards.map((detail) => {
         if (detail.name === "Members Enrolled") {
           return { ...detail, total: res.data.memberEnrolledCount };
+        } else if (detail.name === "Applications Received") {
+          return { ...detail, total: props.applicationCount };
         } else {
           return detail;
         }
@@ -52,11 +57,22 @@ const HeaderCard = (props: Props) => {
     } catch (err) {
       console.log(err);
     }
-  };
+  }, [props.applicationCount]);
 
   useEffect(() => {
     fetchMembersCount();
-  }, []);
+  }, [fetchMembersCount]);
+
+  // useEffect(() => {
+  //   const temp = cards.map((detail) => {
+  //     if (detail.name === "Applications Received") {
+  //       return { ...detail, total: props.applicationCount };
+  //     } else {
+  //       return detail;
+  //     }
+  //   });
+  //   setCards(temp);
+  // }, []);
 
   return (
     <div className="flex flex-wrap justify-center items-center mx-auto gap-8">

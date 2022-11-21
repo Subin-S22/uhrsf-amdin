@@ -15,6 +15,8 @@ import { useEffect, useCallback } from "react";
 import { Button, TablePagination } from "@mui/material";
 import { visuallyHidden } from "@mui/utils";
 import { useNavigate } from "react-router-dom";
+import App from "../../App";
+import { Context } from "../../context";
 
 interface Props {
   title: string;
@@ -23,7 +25,7 @@ interface Props {
 }
 
 interface Data {
-  branchCode: string;
+  branchId: string;
   state: string;
   city: string;
   branchName: string;
@@ -79,7 +81,7 @@ interface HeadCell {
 
 const headCells: readonly HeadCell[] = [
   {
-    id: "branchCode",
+    id: "branchId",
     numeric: false,
     disablePadding: false,
     label: "Branch Code",
@@ -211,13 +213,14 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
 
 export default function EnhancedTable({ title, search, data }: Props) {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof Data>("branchCode");
+  const [orderBy, setOrderBy] = React.useState<keyof Data>("branchId");
   const [selected, setSelected] = React.useState<readonly string[]>([]);
   const [dense] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [rows, setRows] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const store = React.useContext(Context);
 
   // let rows = data?.length ? data : ROWS;
   const allRows = data;
@@ -281,7 +284,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
     if (searchValue === "") setRows(allRows as any);
     else {
       const temp: any = allRows?.filter((row) => {
-        return row.firstAndLastName.includes(searchValue);
+        return row.branchName.includes(searchValue);
       });
       console.log(temp);
 
@@ -336,9 +339,9 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       key={index}
                     >
                       <TableCell component="th" id={labelId} scope="row">
-                        {row.branchCode}
+                        {row.branchId}
                       </TableCell>
-                      <TableCell>{row.branchCode}</TableCell>
+                      <TableCell>{row.branchName}</TableCell>
                       <TableCell>{row.state}</TableCell>
                       <TableCell>{row.city}</TableCell>
                     </TableRow>
@@ -376,7 +379,8 @@ export default function EnhancedTable({ title, search, data }: Props) {
         <Button
           className="bg-dark_blue text-white capitalize"
           onClick={() => {
-            if (title === "Application Received") navigate("/application");
+            store?.action.setTableName(title);
+            if (title === "Branches") navigate("/application/branches");
           }}
         >
           View All

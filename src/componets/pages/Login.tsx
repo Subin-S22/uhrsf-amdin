@@ -2,9 +2,11 @@ import React from "react";
 import { FormControl } from "../molecules";
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
+import { login } from "../../services/admin";
+// import { login } from "../../services/admin";
 
 const initialValues = {
-  email: "",
+  username: "",
   password: "",
 };
 
@@ -13,10 +15,15 @@ type Initial = typeof initialValues;
 export default function Login() {
   const navigate = useNavigate();
 
-  const onSubmit = (values: Initial) => {
-    console.log(values);
-    localStorage.setItem("login", "logged in");
-    navigate("/");
+  const onSubmit = async (values: Initial) => {
+    try {
+      const res = await login(values);
+      console.log(res.data.token);
+      localStorage.setItem("login", res.data.token);
+      navigate("/");
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <div className="flex h-screen w-screen justify-center items-center">
@@ -28,8 +35,8 @@ export default function Login() {
         </div>
         <Formik onSubmit={onSubmit} initialValues={initialValues}>
           <Form className="flex justify-center items-center flex-col p-8">
-            <FormControl name="email" label="Email Address" />
-            <FormControl name="password" label="Password" />
+            <FormControl name="username" label="Email Address" />
+            <FormControl name="password" label="Password" type="password" />
             <div className="flex justify-between items-center gap-4 mb-4 w-full">
               <div className="text-sm flex items-center">
                 <input type="checkbox" className="mr-2" />

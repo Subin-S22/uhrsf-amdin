@@ -7,6 +7,7 @@ import { yetToApprove } from "./services/admin";
 
 function App() {
   const [received, setReceived] = useState([]);
+
   const getYettoApprove = async () => {
     try {
       const res = await yetToApprove();
@@ -21,15 +22,16 @@ function App() {
   useEffect(() => {
     getYettoApprove();
   }, []);
+
   return (
     <Laytout>
       <section className="w-full">
         <section className="mt-6">
-          <HeaderCard />
+          <HeaderCard applicationCount={received.length} />
         </section>
         <section className="m-8">
           <Table title="Application Received" data={received} />
-          <Table title="Members Enrolled" data={[]} />
+          <Table title="Members" data={[]} />
           <BranchTable title="Branches" data={[]} />
         </section>
       </section>

@@ -1,13 +1,13 @@
 import React from "react";
-import { Field as F, ErrorMessage as E } from "formik";
+import { Field as F, ErrorMessage as E, FieldAttributes } from "formik";
 
-type Props = {
+interface Props extends FieldAttributes<any> {
   name: string;
   label: string;
   options?: any[];
-};
+}
 
-const Field = ({ name, label, options }: Props) => {
+const Field = ({ name, label, options, ...props }: Props) => {
   return (
     <div className="flex flex-col">
       <label htmlFor={name} className="font-medium text-base">
@@ -19,6 +19,7 @@ const Field = ({ name, label, options }: Props) => {
           name={name}
           id={name}
           className="border border-gray-400 rounded-md p-2 w-full"
+          {...props}
         >
           <option hidden selected>
             Select...
@@ -32,6 +33,7 @@ const Field = ({ name, label, options }: Props) => {
           name={name}
           id={name}
           className="border border-gray-400 rounded-md p-2 w-full"
+          {...props}
         />
       )}
       <E name="email" />

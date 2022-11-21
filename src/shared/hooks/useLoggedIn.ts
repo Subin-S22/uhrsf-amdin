@@ -1,14 +1,11 @@
-import { useEffect, useState } from "react";
-
 const useLoggedIn = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  let isLoggedIn: boolean;
 
-  useEffect(() => {
-    const details = localStorage.getItem("login");
-    console.log(details);
+  const details = localStorage.getItem("login");
 
-    setIsLoggedIn(!!details);
-  }, [isLoggedIn]);
+  isLoggedIn = !!details;
+  console.log(isLoggedIn);
+
   return { isLoggedIn };
 };
 

@@ -10,6 +10,8 @@ import ApplicationStatus from "./componets/pages/ApplicationStatus";
 import UserForm from "./componets/pages/UserForm";
 import BranchForm from "./componets/pages/BranchForm";
 import { Provider } from "./context";
+import BranchPage from "./componets/pages/BranchPage";
+import { ToastContainer } from "react-toastify";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -17,6 +19,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider>
+    <ToastContainer />
     <BrowserRouter>
       <Routes>
         <Route index path="/login" element={<Login />} />
@@ -29,6 +32,7 @@ root.render(
         ></Route>
         <Route path="/application/add-user" element={<UserForm />}></Route>
         <Route path="/application/add-branch" element={<BranchForm />}></Route>
+        <Route path="/application/branches" element={<BranchPage />}></Route>
       </Routes>
     </BrowserRouter>
   </Provider>
