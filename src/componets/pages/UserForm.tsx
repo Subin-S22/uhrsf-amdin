@@ -146,8 +146,8 @@ const UserForm = () => {
       formData.append("pancard", JSON.stringify(values.panCardLink));
       formData.append("memberPhoto", JSON.stringify(values.memberPhotoLink));
 
-      const res = await memberRegister(formData);
-      console.log(res.data);
+      await memberRegister(formData);
+      toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);

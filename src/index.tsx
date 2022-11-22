@@ -11,7 +11,8 @@ import UserForm from "./componets/pages/UserForm";
 import BranchForm from "./componets/pages/BranchForm";
 import { Provider } from "./context";
 import BranchPage from "./componets/pages/BranchPage";
-import { ToastContainer } from "react-toastify";
+// import { ToastContainer } from "react-toastify";
+// import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -19,7 +20,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider>
-    <ToastContainer />
     <BrowserRouter>
       <Routes>
         <Route index path="/login" element={<Login />} />

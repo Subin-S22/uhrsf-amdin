@@ -11,7 +11,6 @@ function App() {
   const getYettoApprove = async () => {
     try {
       const res = await yetToApprove();
-      console.log(res);
 
       setReceived(res.data.data);
     } catch (err) {

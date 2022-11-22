@@ -46,13 +46,15 @@ const HeaderCard = (props: Props) => {
       console.log(res.data.memberEnrolledCount);
       const temp = cards.map((detail) => {
         if (detail.name === "Members Enrolled") {
-          return { ...detail, total: res.data.memberEnrolledCount };
+          return { ...detail, total: res.data.count };
         } else if (detail.name === "Applications Received") {
           return { ...detail, total: props.applicationCount };
         } else {
           return detail;
         }
       });
+      console.log(temp);
+
       setCards(temp);
     } catch (err) {
       console.log(err);

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useLoggedIn } from "../../shared/hooks";
 import useWindowDimensions from "../../shared/hooks/useWindowDimensions";
 import Navbar from "./Navbar";
@@ -48,6 +50,16 @@ const Laytout = ({ children }: Props) => {
 
   return (
     <main className="bg-slate-100 h-full">
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        closeOnClick
+        pauseOnHover
+        hideProgressBar={false}
+        limit={3}
+        newestOnTop={true}
+        transition={Zoom}
+      />
       <Navbar
         handleClick={handleClick}
         handleClose={handleClose}

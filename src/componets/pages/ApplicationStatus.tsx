@@ -4,6 +4,8 @@ import { getByStatus, viewAllApplication } from "../../services/admin";
 import Laytout from "../molecules/Laytout";
 import CustTable from "../molecules/Table";
 import { Context } from "../../context";
+import { toast } from "react-toastify";
+import { AxiosError } from "axios";
 
 type Props = {};
 
@@ -15,8 +17,8 @@ const ApplicationStatus = (props: Props) => {
   const fetchApplicationStatus = useCallback(async () => {
     try {
       if (status === "view-all") {
+        //get all applications
         const res = await viewAllApplication();
-        console.log(res.data);
         setReceived(res.data.data);
       } else if (status) {
         let params: string = status;
@@ -26,13 +28,17 @@ const ApplicationStatus = (props: Props) => {
           params = "disable";
         }
 
+        //get by status
         const res = await getByStatus(params);
-        console.log(res.data.data);
 
         setReceived(res.data.data);
       }
-    } catch (err) {
-      console.log(err);
+    } catch (err: unknown) {
+      if (typeof err === "string") toast.error(err);
+      else if (err instanceof Error) toast.error(err.message);
+      else if (err instanceof AxiosError) {
+        toast.error(err.response?.statusText);
+      }
     }
   }, [status]);
 
