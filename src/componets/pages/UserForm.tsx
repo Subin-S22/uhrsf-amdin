@@ -91,7 +91,7 @@ const UserForm = () => {
         approvalStatus: status,
       });
       toast.success(updated.data.message);
-      navigate("/application/approved");
+      navigate(-1);
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);

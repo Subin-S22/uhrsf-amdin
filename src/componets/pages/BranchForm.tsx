@@ -1,40 +1,54 @@
+import { AxiosError } from "axios";
 import { Formik, Form } from "formik";
-import React from "react";
+import React, { useContext } from "react";
+import { toast } from "react-toastify";
+import { addBranch } from "../../services/admin";
 import Button from "../atoms/Button";
 import Field from "../atoms/Field";
 import Laytout from "../molecules/Laytout";
+import { useNavigate } from "react-router-dom";
+import { Context } from "../../context";
 
 interface Props {}
 
-const initialValues = {
-  name: "",
-  phoneNumber: "",
-  state: "",
-  city: "",
-  address: "",
-  pincode: "",
-};
-
-type Initial = typeof initialValues;
-
 const BranchForm = (props: Props) => {
+  const store = useContext(Context);
+  const branchDetails = store?.data.branchDetails;
+
+  const navigate = useNavigate();
+
+  const onSubmit = async (values) => {
+    try {
+      console.log(values);
+      await addBranch(values);
+      navigate(-1);
+    } catch (err: unknown) {
+      if (typeof err === "string") {
+        toast.error(err);
+      } else if (err instanceof Error) {
+        toast.error(err.message);
+      } else if (err instanceof AxiosError) {
+        toast.error(err.response?.statusText);
+      } else {
+        toast.error("Failed to add the branch");
+      }
+    }
+  };
+
   return (
     <Laytout>
       <section>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={(values: Initial) => console.log(values)}
-        >
+        <Formik initialValues={branchDetails} onSubmit={onSubmit}>
           <Form className="grid gird-cols-1 lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
             <h1 className="font-bold text-2xl mt-2 mb-4 lg:col-span-2">
               Add Branch
             </h1>
-            <Field name="name" label="Name" />
+            <Field name="branchName" label="Branch Name" />
             <Field name="phoneNumber" label="Phone Number" />
             <Field name="state" label="State" />
             <Field name="city" label="City" />
             <Field name="address" label="Address" />
-            <Field name="pincode" label="Pin Code" />
+            <Field name="zipcode" label="Zip Code" />
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
               <Button variant="disable">Back</Button>
               <Button variant="approve" type="submit">

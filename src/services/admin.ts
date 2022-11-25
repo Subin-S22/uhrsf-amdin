@@ -106,3 +106,12 @@ export const getMemberDetailsById = async (memberId: string) => {
     throw err;
   }
 };
+
+export const addBranch = async (reqBody) => {
+  try {
+    const res = await baseAxios.put("/create-branch", reqBody);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};

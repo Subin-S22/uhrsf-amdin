@@ -3,10 +3,13 @@ import HeaderCard from "./componets/molecules/HeaderCard";
 import Laytout from "./componets/molecules/Laytout";
 import Table from "./componets/molecules/Table";
 import BranchTable from "./componets/molecules/BranchesTable";
-import { yetToApprove } from "./services/admin";
+import { branchList, getByStatus, yetToApprove } from "./services/admin";
 
 function App() {
   const [received, setReceived] = useState([]);
+  const [members, setMembers] = useState([]);
+  const [branches, setBranchList] = useState([]);
+  const [branchCount, setBranchCount] = useState(0);
 
   const getYettoApprove = async () => {
     try {
@@ -18,20 +21,44 @@ function App() {
     }
   };
 
+  const getMembers = async () => {
+    try {
+      const res = await getByStatus("approved");
+
+      setMembers(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const getBranchList = async () => {
+    try {
+      const res = await branchList();
+      setBranchCount(res.data.data.length);
+      setBranchList(res.data.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getYettoApprove();
+    getBranchList();
+    getMembers();
   }, []);
 
   return (
     <Laytout>
       <section className="w-full">
         <section className="mt-6">
-          <HeaderCard applicationCount={received.length} />
+          <HeaderCard
+            applicationCount={received.length}
+            branchCount={branchCount}
+          />
         </section>
         <section className="m-8">
           <Table title="Application Received" data={received} />
-          <Table title="Members" data={[]} />
-          <BranchTable title="Branches" data={[]} />
+          <Table title="Members" data={members} />
+          <BranchTable title="Branches" data={branches} />
         </section>
       </section>
     </Laytout>

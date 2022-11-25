@@ -7,6 +7,7 @@ import { IconType } from "react-icons/lib";
 
 type Props = {
   applicationCount: number;
+  branchCount: number;
 };
 
 interface Detail {
@@ -65,6 +66,20 @@ const HeaderCard = (props: Props) => {
   useEffect(() => {
     fetchMembersCount();
   }, [fetchMembersCount]);
+
+  useEffect(() => {
+    if (props.branchCount) {
+      const temp = cards.map((card) => {
+        if (card.name === "Branches") {
+          return { ...card, total: props.branchCount };
+        } else return card;
+      });
+      console.log(temp);
+
+      setCards(temp);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.branchCount]);
 
   // useEffect(() => {
   //   const temp = cards.map((detail) => {

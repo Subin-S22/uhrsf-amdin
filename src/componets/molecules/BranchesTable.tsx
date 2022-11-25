@@ -295,6 +295,11 @@ export default function EnhancedTable({ title, search, data }: Props) {
     filterData();
   }, [filterData, searchValue]);
 
+  const handleBranchDetails = (branch) => {
+    store?.action.setBranchDetails(branch);
+    navigate("/application/add-branch");
+  };
+
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
@@ -336,6 +341,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={index}
+                      onClick={() => handleBranchDetails(row)}
                     >
                       <TableCell component="th" id={labelId} scope="row">
                         {row.branchId}
