@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react";
 import { SlPeople } from "react-icons/sl";
 import { BiTimeFive, BiHome } from "react-icons/bi";
 import { MdOutlineLocalPolice } from "react-icons/md";
-import { membersCount } from "../../services/admin";
+import { getByStatus, membersCount } from "../../services/admin";
 import { IconType } from "react-icons/lib";
 
 type Props = {
@@ -44,12 +44,15 @@ const HeaderCard = (props: Props) => {
   const fetchMembersCount = useCallback(async () => {
     try {
       const res: any = await membersCount();
-      console.log(res.data.memberEnrolledCount);
+      const executive = await getByStatus("executive");
+
       const temp = cards.map((detail) => {
         if (detail.name === "Members Enrolled") {
           return { ...detail, total: res.data.count };
         } else if (detail.name === "Applications Received") {
           return { ...detail, total: props.applicationCount };
+        } else if (detail.name === "Executives Enrolled") {
+          return { ...detail, total: executive.data.count };
         } else {
           return detail;
         }

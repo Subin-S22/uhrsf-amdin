@@ -4,7 +4,6 @@ import Laytout from "../molecules/Laytout";
 import Field from "../atoms/Field";
 import Button from "../atoms/Button";
 import { Context } from "../../context";
-import { Store } from "../../context/Provider";
 import {
   getMemberDetailsById,
   memberRegister,
@@ -72,9 +71,7 @@ const addUserCategory = ["AddUser"];
 const UserForm = () => {
   const store = useContext(Context);
   const [isEdit, setIsEdit] = useState(false);
-  const {
-    data: { userDetails },
-  } = store as Store;
+  const [userObject, setUserObject] = useState<any>({});
 
   const navigate = useNavigate();
 
@@ -104,6 +101,9 @@ const UserForm = () => {
   const getMemberDetails = async (memberId: string) => {
     try {
       const res = await getMemberDetailsById(memberId);
+      console.log(res.data.data);
+      setUserObject(res.data.data);
+
       store?.action.setUserDetails(res.data.data);
     } catch (err) {
       console.log(err);
@@ -119,7 +119,7 @@ const UserForm = () => {
       getMemberDetails(store?.data.userDetails.uhrsfMemberId);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [store?.data.userDetails]);
+  }, []);
 
   const handleReferral = async (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -173,8 +173,9 @@ const UserForm = () => {
   return (
     <Laytout>
       <Formik
-        initialValues={userDetails}
+        initialValues={userObject}
         onSubmit={(values) => console.log(values)}
+        enableReinitialize
       >
         {(props: FormikProps<any>) => (
           <Form className="grid gird-cols-1 lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
@@ -244,57 +245,76 @@ const UserForm = () => {
               disabled={true}
             />
 
-            <div>
+            <div className="flex flex-col">
               <label>Aadharcard Photo</label>
               <input
                 type="file"
+                id="aadharcardphoto"
                 name="aadharCardLink"
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
-                  props.setFieldValue("aadharcardPhoto", e.target.files?.[0]);
+                  props.setFieldValue("aadharCardLink", e.target.files?.[0]);
                 }}
               />
-              {"1" + props.values.aadharCardLink + "1"}
-              {props.values.aadharCardLink && (
-                <img
-                  src={URL.createObjectURL(props.values.aadharCardLink)}
-                  alt="aadharcard"
-                />
-              )}
+              <label
+                htmlFor="aadharcardphoto"
+                className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
+              >
+                <span className="truncate">
+                  {props.values?.aadharCardLink?.name ||
+                    props.values?.aadharCardLink}
+                </span>
+                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                  select
+                </span>
+              </label>
             </div>
-            <div>
+            <div className="flex flex-col">
               <label>Pancard Photo</label>
               <input
                 type="file"
                 name="panCardLink"
+                id="pancardphoto"
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
                   props.setFieldValue("panCardLink", e.target.files?.[0]);
                 }}
               />
-              {props.values.panCardLink && (
-                <img
-                  src={URL.createObjectURL(props.values.panCardLink)}
-                  alt="pancardphoto"
-                />
-              )}
+              <label
+                htmlFor="pancardphoto"
+                className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
+              >
+                <span className="truncate">
+                  {props.values?.panCardLink?.name || props.values?.panCardLink}
+                </span>
+                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                  select
+                </span>
+              </label>
             </div>
-            <div>
+            <div className="flex flex-col">
               <label>Profile Photo</label>
               <input
                 type="file"
                 name="memberPhotoLink"
+                id="profilephoto"
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
                   props.setFieldValue("memberPhotoLink", e.target.files?.[0]);
                 }}
               />
-              {props.values.memberPhotoLink && (
-                <img
-                  src={URL.createObjectURL(props.values.memberPhotoLink)}
-                  alt="profilephoto"
-                />
-              )}
+              <label
+                htmlFor="profilephoto"
+                className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
+              >
+                <span className="truncate">
+                  {props.values?.memberPhotoLink?.name ||
+                    props.values?.memberPhotoLink}
+                </span>
+                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                  select
+                </span>
+              </label>
             </div>
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
               <Button variant="disable" onClick={() => navigate(-1)}>

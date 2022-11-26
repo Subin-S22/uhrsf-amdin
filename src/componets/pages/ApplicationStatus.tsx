@@ -16,6 +16,7 @@ const ApplicationStatus = (props: Props) => {
 
   const fetchApplicationStatus = useCallback(async () => {
     try {
+      const loading = toast.loading("loading...");
       if (status === "view-all") {
         //get all applications
         const res = await viewAllApplication();
@@ -33,6 +34,11 @@ const ApplicationStatus = (props: Props) => {
 
         setReceived(res.data.data);
       }
+      toast.update(loading, {
+        render: "Successfull",
+        type: "success",
+        isLoading: false,
+      });
     } catch (err: unknown) {
       if (typeof err === "string") toast.error(err);
       else if (err instanceof Error) toast.error(err.message);

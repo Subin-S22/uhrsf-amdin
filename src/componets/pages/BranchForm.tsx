@@ -19,9 +19,15 @@ const BranchForm = (props: Props) => {
 
   const onSubmit = async (values) => {
     try {
-      console.log(values);
+      const loading = toast.loading("please wait...");
+
       await addBranch(values);
-      navigate(-1);
+
+      toast.update(loading, {
+        render: "Branch added succesfully",
+        type: "success",
+        isLoading: false,
+      });
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
@@ -50,7 +56,9 @@ const BranchForm = (props: Props) => {
             <Field name="address" label="Address" />
             <Field name="zipcode" label="Zip Code" />
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
-              <Button variant="disable">Back</Button>
+              <Button variant="disable" onClick={() => navigate(-1)}>
+                Back
+              </Button>
               <Button variant="approve" type="submit">
                 Save
               </Button>

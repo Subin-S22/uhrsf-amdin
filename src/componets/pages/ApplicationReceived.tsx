@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { yetToApprove } from "../../services/admin";
 import Laytout from "../molecules/Laytout";
 import CustTable from "../molecules/Table";
@@ -10,6 +11,7 @@ const Application = (props: Props) => {
 
   const fetchApplicationReceived = async () => {
     try {
+      toast.loading("loading...");
       const res = await yetToApprove();
       setReceived(res.data.data);
     } catch (err) {

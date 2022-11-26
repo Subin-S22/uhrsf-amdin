@@ -52,7 +52,7 @@ const Laytout = ({ children }: Props) => {
     <main className="bg-slate-100 h-full">
       <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={2000}
         closeOnClick
         pauseOnHover
         hideProgressBar={false}

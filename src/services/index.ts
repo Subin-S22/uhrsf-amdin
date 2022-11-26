@@ -9,7 +9,6 @@ const baseAxios = axios.create({
 baseAxios.interceptors.request.use(
   function (config) {
     // Do something before request is sent
-    toast.info("Loading...");
     return config;
   },
   function (error) {
@@ -21,13 +20,12 @@ baseAxios.interceptors.request.use(
 // Add a response interceptor
 baseAxios.interceptors.response.use(
   function (response) {
-    toast.success("Successfull");
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
+    toast.dismiss();
     return response;
   },
   function (error) {
-    toast.error("Failed");
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
     return Promise.reject(error);
