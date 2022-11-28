@@ -91,7 +91,11 @@ export const viewAllApplication = async () => {
 
 export const memberRegister = async (reqBody) => {
   try {
-    const res = await baseAxios.post("/member-register", reqBody);
+    const res = await baseAxios.post("/member-register", reqBody, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
     return res;
   } catch (err) {
     throw err;

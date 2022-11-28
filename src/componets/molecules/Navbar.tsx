@@ -3,6 +3,7 @@ import profile from "../../assets/profile.png";
 import React from "react";
 import { FiChevronDown } from "react-icons/fi";
 import { GoThreeBars } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   handleSideBarClose: () => void;
@@ -19,6 +20,13 @@ const Navbar = ({
   anchorEl,
   handleClose,
 }: Props) => {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    navigate("/login");
+    localStorage.removeItem("login");
+  };
+
   return (
     <nav
       className={`sticky top-0 shadow-lg pt-2 px-4 flex justify-between items-center bg-white z-10`}
@@ -58,7 +66,7 @@ const Navbar = ({
             }}
           >
             <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </Menu>
         </div>
       </div>

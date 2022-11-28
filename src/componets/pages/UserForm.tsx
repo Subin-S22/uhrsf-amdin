@@ -127,12 +127,15 @@ const UserForm = () => {
     try {
       const formData = new FormData();
 
-      formData.set("memberRegister", JSON.stringify(values));
-      formData.append("aadharCard", JSON.stringify(values.aadharCardLink));
-      formData.append("pancard", JSON.stringify(values.panCardLink));
-      formData.append("memberPhoto", JSON.stringify(values.memberPhotoLink));
-
+      formData.append("aadharCard", values.aadharCardLink);
+      formData.append("pancard", values.panCardLink);
+      formData.append("memberPhoto", values.memberPhotoLink);
+      delete values.aadharCardLink;
+      delete values.panCardLink;
+      delete values.memberPhotoLink;
+      formData.append("memberRegister", JSON.stringify(values));
       await memberRegister(formData);
+      navigate("/");
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -146,12 +149,13 @@ const UserForm = () => {
     try {
       const formData = new FormData();
 
-      formData.set("memberRegister", JSON.stringify(values));
-      formData.append("aadharCard", JSON.stringify(values.aadharCardLink));
-      formData.append("pancard", JSON.stringify(values.panCardLink));
-      formData.append("memberPhoto", JSON.stringify(values.memberPhotoLink));
+      formData.append("aadharCard", values.aadharCardLink);
+      formData.append("pancard", values.panCardLink);
+      formData.append("memberPhoto", values.memberPhotoLink);
+      formData.append("memberRegister", JSON.stringify(values));
 
       await updateMember(formData);
+      navigate("/");
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -183,7 +187,7 @@ const UserForm = () => {
         enableReinitialize
       >
         {(props: FormikProps<any>) => (
-          <Form className="grid gird-cols-1 lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
+          <Form className="flex flex-col lg:grid lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
             <h1 className="font-bold text-2xl mt-2 mb-4 lg:col-span-2">
               User Informations
             </h1>

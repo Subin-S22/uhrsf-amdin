@@ -303,6 +303,14 @@ export default function EnhancedTable({ title, search, data }: Props) {
   }, [filterData, searchValue]);
 
   console.log(title);
+  const dateFormat = (date: string) => {
+    const splitDateTime = date.split("T")[0];
+    return new Date(splitDateTime).toLocaleDateString("en-IN", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
+  };
 
   return (
     <Box sx={{ width: "100%" }}>
@@ -358,7 +366,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       <TableCell>{row.firstAndLastName}</TableCell>
                       <TableCell>{row.state}</TableCell>
                       <TableCell>{row.city}</TableCell>
-                      <TableCell>{row.dob}</TableCell>
+                      <TableCell>{dateFormat(row.dob as string)}</TableCell>
                       <TableCell onClick={(event) => handleClick(event, row)}>
                         <AiFillEye />
                       </TableCell>

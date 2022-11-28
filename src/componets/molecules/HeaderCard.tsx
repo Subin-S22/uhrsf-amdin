@@ -53,6 +53,8 @@ const HeaderCard = (props: Props) => {
           return { ...detail, total: props.applicationCount };
         } else if (detail.name === "Executives Enrolled") {
           return { ...detail, total: executive.data.count };
+        } else if (detail.name === "Branches") {
+          return { ...detail, total: props.branchCount };
         } else {
           return detail;
         }
@@ -64,25 +66,11 @@ const HeaderCard = (props: Props) => {
       console.log(err);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.applicationCount]);
+  }, [props.applicationCount, props.branchCount]);
 
   useEffect(() => {
     fetchMembersCount();
   }, [fetchMembersCount]);
-
-  useEffect(() => {
-    if (props.branchCount) {
-      const temp = cards.map((card) => {
-        if (card.name === "Branches") {
-          return { ...card, total: props.branchCount };
-        } else return card;
-      });
-      console.log(temp);
-
-      setCards(temp);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.branchCount]);
 
   // useEffect(() => {
   //   const temp = cards.map((detail) => {
