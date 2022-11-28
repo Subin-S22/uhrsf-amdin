@@ -8,31 +8,11 @@ import {
   getMemberDetailsById,
   memberRegister,
   referralName,
+  updateMember,
   updateStatus,
 } from "../../services/admin";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-
-// let initialValues = {
-//   firstAndLastName: "",
-//   emailId: "",
-//   parentsName: "",
-//   mobileNumber: "",
-//   dob: "",
-//   gender: "",
-//   bloodGroup: "",
-//   qualification: "",
-//   profession: "",
-//   referralId: "",
-//   referralName: "",
-//   address: "",
-//   city: "",
-//   state: "",
-//   pincode: "",
-//   nationality: "INDIAN",
-//   aadharcard: "",
-//   pancard: "",
-// };
 
 const Qualification = [
   "Illiterate",
@@ -100,8 +80,14 @@ const UserForm = () => {
 
   const getMemberDetails = async (memberId: string) => {
     try {
+      const loading = toast.loading("loading the user data...");
       const res = await getMemberDetailsById(memberId);
-      console.log(res.data.data);
+      toast.update(loading, {
+        render: "Loaded",
+        type: "success",
+        isLoading: false,
+      });
+
       setUserObject(res.data.data);
 
       store?.action.setUserDetails(res.data.data);
@@ -147,6 +133,25 @@ const UserForm = () => {
       formData.append("memberPhoto", JSON.stringify(values.memberPhotoLink));
 
       await memberRegister(formData);
+      toast.success("member added successfully");
+    } catch (err: unknown) {
+      if (typeof err === "string") {
+        toast.error(err);
+      } else if (err instanceof Error) {
+        toast.error(err.message);
+      }
+    }
+  };
+  const updateMembers = async (values) => {
+    try {
+      const formData = new FormData();
+
+      formData.set("memberRegister", JSON.stringify(values));
+      formData.append("aadharCard", JSON.stringify(values.aadharCardLink));
+      formData.append("pancard", JSON.stringify(values.panCardLink));
+      formData.append("memberPhoto", JSON.stringify(values.memberPhotoLink));
+
+      await updateMember(formData);
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -371,6 +376,13 @@ const UserForm = () => {
                 onClick={() => addMembers(props.values)}
               >
                 Save
+              </Button>
+              <Button
+                variant="save"
+                isVisible={isEdit && !addUserCategory.includes(title as string)}
+                onClick={() => updateMembers(props.values)}
+              >
+                Update
               </Button>
             </div>
           </Form>

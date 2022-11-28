@@ -98,6 +98,15 @@ export const memberRegister = async (reqBody) => {
   }
 };
 
+export const updateMember = async (reqBody) => {
+  try {
+    const res = await baseAxios.put("/member-register", reqBody);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const getMemberDetailsById = async (memberId: string) => {
   try {
     const res = await baseAxios.get(`/member-details?memberId=${memberId}`);
