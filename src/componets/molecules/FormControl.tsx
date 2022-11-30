@@ -10,7 +10,7 @@ function FormControl({ label, name, ...props }: Props) {
   return (
     <div className="mb-4 w-full">
       <label
-        className="block text-gray-700 text-sm font-bold mb-2"
+        className="block text-gray-700 lg:text-sm text-xs font-bold mb-2"
         htmlFor="username"
       >
         {label}

@@ -92,8 +92,10 @@ const HeaderCard = (props: Props) => {
             className="shadow-[1px_2px_6px_1px_#cdcdcd] rounded-md p-4 min-w-[14rem] bg-white"
           >
             {<item.icon className="text-3xl" />}
-            <div className="text-center textlg font-semibold">{item.total}</div>
-            <div className="text-center text-md font-medium text-gray-500">
+            <div className="text-center lg:textlg text-base font-semibold">
+              {item.total}
+            </div>
+            <div className="text-center lg:text-base text-sm font-medium text-gray-500">
               {item.name}
             </div>
           </div>

@@ -176,7 +176,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
           </div>
         </div>
         <li
-          className="text-base cursor-pointer font-medium text-white p-2 m-2"
+          className="text-base cursor-pointer font-medium text-white p-2 m-2 lg:text-lg"
           onClick={() => {
             handleRouting("dashboard");
             sideBarAction();
@@ -193,7 +193,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
             <AccordionSummary
               aria-controls={sidebar.name}
               id={`${sidebar.name}${index}`}
-              className="inner_div_flex"
+              className="inner_div_flex text-base lg:text-lg"
             >
               <span>{sidebar.name}</span>
               {sidebar.sub?.length && <FiChevronDown />}
@@ -206,7 +206,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
                       <li
                         key={index}
                         onClick={() => handleRouting(side.value, side.name)}
-                        className="text-sm font-medium text-slate-300 p-2 m-2 cursor-pointer"
+                        className="text-xs font-medium text-slate-300 p-2 m-2 cursor-pointer"
                       >
                         {side.name}
                       </li>

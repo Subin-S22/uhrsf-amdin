@@ -10,7 +10,7 @@ interface Props extends FieldAttributes<any> {
 const Field = ({ name, label, options, ...props }: Props) => {
   return (
     <div className="flex flex-col">
-      <label htmlFor={name} className="font-medium text-base">
+      <label htmlFor={name} className="font-medium lg:text-base text-sm">
         {label}
       </label>
       {options?.length ? (

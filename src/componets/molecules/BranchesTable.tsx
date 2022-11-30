@@ -193,7 +193,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           sx={{ flex: "1 1 100%" }}
           id="tableTitle"
           component="div"
-          className="font-semibold"
+          className="font-semibold text-center sm:text-left lg:text-lg text-base"
         >
           {title}
         </Typography>
@@ -382,7 +382,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
       /> */}
       <Box className="flex justify-end mr-6 mb-8">
         <Button
-          className="bg-dark_blue text-white capitalize"
+          className="bg-dark_blue text-white capitalize lg:text-base text-sm"
           onClick={() => {
             store?.action.setTableName(title);
             if (title === "Branches") navigate("/application/branches");
