@@ -11,9 +11,14 @@ const Application = (props: Props) => {
 
   const fetchApplicationReceived = async () => {
     try {
-      toast.loading("loading...");
+      const loading = toast.loading("loading...");
       const res = await yetToApprove();
       setReceived(res.data.data);
+      toast.update(loading, {
+        render: "Successfull",
+        isLoading: false,
+        type: "success",
+      });
     } catch (err) {
       console.log(err);
     }
