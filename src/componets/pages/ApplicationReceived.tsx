@@ -10,8 +10,9 @@ const Application = (props: Props) => {
   const [received, setReceived] = useState([]);
 
   const fetchApplicationReceived = async () => {
+    let loading;
     try {
-      const loading = toast.loading("loading...");
+      loading = toast.loading("loading...");
       const res = await yetToApprove();
       setReceived(res.data.data);
       toast.update(loading, {
@@ -21,6 +22,11 @@ const Application = (props: Props) => {
       });
     } catch (err) {
       console.log(err);
+      toast.update(loading, {
+        render: "Failed",
+        isLoading: false,
+        type: "error",
+      });
     }
   };
   useEffect(() => {
