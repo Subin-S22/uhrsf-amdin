@@ -8,8 +8,8 @@ module.exports = {
         dark_blue: "#232a3e",
       },
       fontSize: {
-        xs: "13px",
-        sm: "13px",
+        xs: "11px",
+        sm: "11px",
         base: "13px",
         lg: "16px",
         xl: "20px",
