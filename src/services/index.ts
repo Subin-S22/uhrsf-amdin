@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const baseAxios = axios.create({
-  baseURL: "https://uhrsf-dev.herokuapp.com/api/v1/uhrsf",
+  baseURL: "http://103.93.16.19:33234/uhrsf-0.0.1-SNAPSHOT/api/v1/uhrsf",
 });
 
 // Add a request interceptor
