@@ -98,7 +98,7 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
         break;
       case "viewAll":
         sideBarAction();
-        store?.action.setTableName("Appliations");
+        store?.action.setTableName("Applications");
         navigate(`/application/view-all`);
         break;
       case "rejected":

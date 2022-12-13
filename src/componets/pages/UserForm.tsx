@@ -30,6 +30,7 @@ const BloodGroup = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
 const disableCategory = ["Application Approved", "Members", "Executives"];
 
 const editCategory = [
+  "Applications",
   "Application Received",
   "Application Approved",
   "Application Rejected",
@@ -60,6 +61,7 @@ const UserForm = () => {
   const enableEdit = () => {
     setIsEdit(true);
   };
+  console.log(title);
 
   const approvalStatus = async (values, status) => {
     try {
