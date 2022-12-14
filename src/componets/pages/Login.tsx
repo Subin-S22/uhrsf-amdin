@@ -35,14 +35,16 @@ export default function Login() {
         </div>
         <Formik onSubmit={onSubmit} initialValues={initialValues}>
           <Form className="flex justify-center items-center flex-col p-8">
-            <FormControl name="username" label="Email Address" />
+            <FormControl name="username" label="User Name" />
             <FormControl name="password" label="Password" type="password" />
             <div className="flex justify-between items-center gap-4 mb-4 w-full">
               <div className="text-sm flex items-center">
-                <input type="checkbox" className="mr-2" />
-                <label>Remember me</label>
+                {/* <input type="checkbox" className="mr-2" />
+                <label>Remember me</label> */}
               </div>
-              <div className="text-sm text-blue-500">Forgot Password?</div>
+              <div className="text-sm text-blue-500 cursor-pointer">
+                Forgot Password?
+              </div>
             </div>
             <div className="flex gap-4 flex-col w-full text-center">
               <button

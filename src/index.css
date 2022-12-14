@@ -133,3 +133,12 @@ select {
 input[type="file"] {
   display: none;
 }
+
+::-webkit-scrollbar {
+  width: 0;
+  border-left: 1px solid #e6ecf8;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary);
+  border-radius: 1rem;
+}

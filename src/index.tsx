@@ -11,6 +11,7 @@ import UserForm from "./componets/pages/UserForm";
 import BranchForm from "./componets/pages/BranchForm";
 import { Provider } from "./context";
 import BranchPage from "./componets/pages/BranchPage";
+import Profile from "./componets/pages/Profile";
 // import { ToastContainer } from "react-toastify";
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -33,6 +34,7 @@ root.render(
         <Route path="/application/add-user" element={<UserForm />}></Route>
         <Route path="/application/add-branch" element={<BranchForm />}></Route>
         <Route path="/application/branches" element={<BranchPage />}></Route>
+        <Route path="/profile" element={<Profile />}></Route>
       </Routes>
     </BrowserRouter>
   </Provider>
