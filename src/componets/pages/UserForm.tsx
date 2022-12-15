@@ -53,6 +53,11 @@ const UserForm = () => {
   const store = useContext(Context);
   const [isEdit, setIsEdit] = useState(false);
   const [userObject, setUserObject] = useState<any>({});
+  const [photos, setPhotos] = useState({
+    aadharPhoto: "",
+    pancardPhoto: "",
+    memberPhoto: "",
+  });
 
   const navigate = useNavigate();
 
@@ -91,6 +96,11 @@ const UserForm = () => {
       });
 
       setUserObject(res.data.data);
+      setPhotos({
+        aadharPhoto: res.data.data.aadharCardLink,
+        pancardPhoto: res.data.data.panCardLink,
+        memberPhoto: res.data.data.memberPhotoLink,
+      });
 
       store?.action.setUserDetails(res.data.data);
     } catch (err) {
@@ -255,7 +265,6 @@ const UserForm = () => {
               label="Referral Name"
               disabled={true}
             />
-
             <div className="flex flex-col">
               <label>Aadharcard Photo</label>
               <input
@@ -265,6 +274,10 @@ const UserForm = () => {
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
                   props.setFieldValue("aadharCardLink", e.target.files?.[0]);
+                  setPhotos((prev) => ({
+                    ...prev,
+                    aadharPhoto: e.target.files?.[0] as any,
+                  }));
                 }}
               />
               <label
@@ -280,6 +293,17 @@ const UserForm = () => {
                 </span>
               </label>
             </div>
+            {photos.aadharPhoto && (
+              <img
+                src={
+                  photos.aadharPhoto && typeof photos.aadharPhoto === "string"
+                    ? photos.aadharPhoto
+                    : URL.createObjectURL(new Blob([photos.aadharPhoto]))
+                }
+                alt="aadharphoto"
+                className="w-[200px]"
+              />
+            )}
             <div className="flex flex-col">
               <label>Pancard Photo</label>
               <input
@@ -289,6 +313,10 @@ const UserForm = () => {
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
                   props.setFieldValue("panCardLink", e.target.files?.[0]);
+                  setPhotos((prev) => ({
+                    ...prev,
+                    pancardPhoto: e.target.files?.[0] as any,
+                  }));
                 }}
               />
               <label
@@ -303,6 +331,17 @@ const UserForm = () => {
                 </span>
               </label>
             </div>
+            {photos.pancardPhoto && (
+              <img
+                src={
+                  photos.pancardPhoto && typeof photos.pancardPhoto === "string"
+                    ? photos.pancardPhoto
+                    : URL.createObjectURL(new Blob([photos.pancardPhoto]))
+                }
+                alt="pancardphoto"
+                className="w-[200px]"
+              />
+            )}
             <div className="flex flex-col">
               <label>Profile Photo</label>
               <input
@@ -312,6 +351,10 @@ const UserForm = () => {
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
                   props.setFieldValue("memberPhotoLink", e.target.files?.[0]);
+                  setPhotos((prev) => ({
+                    ...prev,
+                    memberPhoto: e.target.files?.[0] as any,
+                  }));
                 }}
               />
               <label
@@ -327,6 +370,17 @@ const UserForm = () => {
                 </span>
               </label>
             </div>
+            {photos.memberPhoto && (
+              <img
+                src={
+                  photos.memberPhoto && typeof photos.memberPhoto === "string"
+                    ? photos.memberPhoto
+                    : URL.createObjectURL(new Blob([photos.memberPhoto]))
+                }
+                alt="memberphoto"
+                className="w-[200px]"
+              />
+            )}
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
               <Button variant="disable" onClick={() => navigate(-1)}>
                 Back
@@ -334,7 +388,7 @@ const UserForm = () => {
               <Button
                 variant="edit"
                 onClick={enableEdit}
-                isVisible={editCategory.includes(title as string)}
+                isVisible={!isEdit && editCategory.includes(title as string)}
               >
                 Edit
               </Button>
@@ -342,14 +396,14 @@ const UserForm = () => {
                 variant="approve"
                 onClick={() => approvalStatus(props.values, "APPROVED")}
                 type="submit"
-                isVisible={approveCategory.includes(title as string)}
+                isVisible={!isEdit && approveCategory.includes(title as string)}
               >
                 Approve
               </Button>
               <Button
                 type="submit"
                 variant="disable"
-                isVisible={disableCategory.includes(title as string)}
+                isVisible={!isEdit && disableCategory.includes(title as string)}
                 onClick={() => approvalStatus(props.values, "DISABLE")}
               >
                 Disable
@@ -357,7 +411,9 @@ const UserForm = () => {
               <Button
                 type="submit"
                 variant="reject"
-                isVisible={rejectedCategory.includes(title as string)}
+                isVisible={
+                  !isEdit && rejectedCategory.includes(title as string)
+                }
                 onClick={() => approvalStatus(props.values, "REJECTED")}
               >
                 Reject
@@ -366,19 +422,21 @@ const UserForm = () => {
                 type="submit"
                 onClick={() => approvalStatus(props.values, "EXECUTIVE")}
                 variant="executive"
-                isVisible={executiveCategory.includes(title as string)}
+                isVisible={
+                  !isEdit && executiveCategory.includes(title as string)
+                }
               >
                 Executive
               </Button>
               <Button
                 variant="enable"
-                isVisible={enableCategory.includes(title as string)}
+                isVisible={!isEdit && enableCategory.includes(title as string)}
               >
                 Enable
               </Button>
               <Button
                 variant="save"
-                isVisible={addUserCategory.includes(title as string)}
+                isVisible={!isEdit && addUserCategory.includes(title as string)}
                 onClick={() => addMembers(props.values)}
               >
                 Save
