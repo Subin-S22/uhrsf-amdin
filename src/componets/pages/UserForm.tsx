@@ -161,9 +161,22 @@ const UserForm = () => {
     try {
       const formData = new FormData();
 
-      formData.append("aadharCard", values.aadharCardLink);
-      formData.append("pancard", values.panCardLink);
-      formData.append("memberPhoto", values.memberPhotoLink);
+      if (values.aadharCardLink instanceof Object) {
+        formData.append("aadharCard", values.aadharCardLink);
+      } else {
+        formData.append("aadharCard", "");
+      }
+      if (values.aadharCardLink instanceof Object) {
+        formData.append("pancard", values.panCardLink);
+      } else {
+        formData.append("pancard", "");
+      }
+      if (values.aadharCardLink instanceof Object) {
+        formData.append("memberPhoto", values.memberPhotoLink);
+      } else {
+        formData.append("memberPhoto", "");
+      }
+
       formData.append("memberRegister", JSON.stringify(values));
 
       await updateMember(formData);
@@ -288,12 +301,21 @@ const UserForm = () => {
                   {props.values?.aadharCardLink?.name ||
                     props.values?.aadharCardLink}
                 </span>
-                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
-                  select
-                </span>
+                {!isEdit ? (
+                  <span
+                    className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
+                    onClick={() => window.open(props.values?.aadharCardLink)}
+                  >
+                    open
+                  </span>
+                ) : (
+                  <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                    select
+                  </span>
+                )}
               </label>
             </div>
-            {photos.aadharPhoto && (
+            {/* {photos.aadharPhoto && isEdit && (
               <img
                 src={
                   photos.aadharPhoto && typeof photos.aadharPhoto === "string"
@@ -303,7 +325,7 @@ const UserForm = () => {
                 alt="aadharphoto"
                 className="w-[200px]"
               />
-            )}
+            )} */}
 
             <div className="flex flex-col">
               <label>Pancard Photo</label>
@@ -327,12 +349,21 @@ const UserForm = () => {
                 <span className="truncate">
                   {props.values?.panCardLink?.name || props.values?.panCardLink}
                 </span>
-                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
-                  select
-                </span>
+                {!isEdit ? (
+                  <span
+                    className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
+                    onClick={() => window.open(props.values?.aadharCardLink)}
+                  >
+                    open
+                  </span>
+                ) : (
+                  <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                    select
+                  </span>
+                )}
               </label>
             </div>
-            {photos.pancardPhoto && (
+            {/* {photos.pancardPhoto && isEdit && (
               <img
                 src={
                   photos.pancardPhoto && typeof photos.pancardPhoto === "string"
@@ -342,7 +373,7 @@ const UserForm = () => {
                 alt="pancardphoto"
                 className="w-[200px]"
               />
-            )}
+            )} */}
             <div className="flex flex-col">
               <label>Profile Photo</label>
               <input
@@ -366,12 +397,21 @@ const UserForm = () => {
                   {props.values?.memberPhotoLink?.name ||
                     props.values?.memberPhotoLink}
                 </span>
-                <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
-                  select
-                </span>
+                {!isEdit ? (
+                  <span
+                    className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
+                    onClick={() => window.open(props.values?.aadharCardLink)}
+                  >
+                    open
+                  </span>
+                ) : (
+                  <span className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]">
+                    select
+                  </span>
+                )}
               </label>
             </div>
-            {photos.memberPhoto && (
+            {/* {photos.memberPhoto && isEdit && (
               <img
                 src={
                   photos.memberPhoto && typeof photos.memberPhoto === "string"
@@ -381,7 +421,7 @@ const UserForm = () => {
                 alt="memberphoto"
                 className="w-[200px]"
               />
-            )}
+            )} */}
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
               <Button variant="disable" onClick={() => navigate(-1)}>
                 Back
