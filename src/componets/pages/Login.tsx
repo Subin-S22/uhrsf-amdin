@@ -3,7 +3,7 @@ import { FormControl } from "../molecules";
 import { Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/admin";
-// import { login } from "../../services/admin";
+import { toast } from "react-toastify";
 
 const initialValues = {
   username: "",
@@ -18,11 +18,11 @@ export default function Login() {
   const onSubmit = async (values: Initial) => {
     try {
       const res = await login(values);
-      console.log(res.data.token);
       localStorage.setItem("login", res.data.token);
       navigate("/");
+      toast.success("you are logged in");
     } catch (err) {
-      console.log(err);
+      toast.error("Failed");
     }
   };
   return (

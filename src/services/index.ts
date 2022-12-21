@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const baseAxios = axios.create({
-  baseURL: "http://103.93.16.19:33234/uhrsf-0.0.1-SNAPSHOT/api/v1/uhrsf",
+  baseURL: "http://mahasamrudhi.com/uhrsf-0.0.1-SNAPSHOT/api/v1/uhrsf",
 });
 
 // Add a request interceptor
@@ -28,7 +28,6 @@ baseAxios.interceptors.response.use(
   function (error) {
     // Any status codes that falls outside the range of 2xx cause this function to trigger
     // Do something with response error
-    toast.dismiss();
     return Promise.reject(error);
   }
 );
