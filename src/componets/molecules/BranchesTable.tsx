@@ -343,7 +343,12 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       key={index}
                       onClick={() => handleBranchDetails(row)}
                     >
-                      <TableCell component="th" id={labelId} scope="row">
+                      <TableCell
+                        component="th"
+                        id={labelId}
+                        scope="row"
+                        className="hover:text-blue-500 cursor-pointer"
+                      >
                         {row.branchId}
                       </TableCell>
                       <TableCell>{row.branchName}</TableCell>

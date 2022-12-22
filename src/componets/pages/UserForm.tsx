@@ -58,6 +58,7 @@ const UserForm = () => {
     pancardPhoto: "",
     memberPhoto: "",
   });
+  console.log(photos);
 
   const navigate = useNavigate();
 
@@ -352,7 +353,7 @@ const UserForm = () => {
                 {!isEdit ? (
                   <span
                     className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
-                    onClick={() => window.open(props.values?.aadharCardLink)}
+                    onClick={() => window.open(props.values?.panCardLink)}
                   >
                     open
                   </span>
@@ -400,7 +401,7 @@ const UserForm = () => {
                 {!isEdit ? (
                   <span
                     className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
-                    onClick={() => window.open(props.values?.aadharCardLink)}
+                    onClick={() => window.open(props.values?.memberPhotoLink)}
                   >
                     open
                   </span>

@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const baseAxios = axios.create({
-  baseURL: "http://mahasamrudhi.com/uhrsf-0.0.1-SNAPSHOT/api/v1/uhrsf",
+  baseURL: "http://mahasamrudhi.com/uhrsf_deploy/api/v1/uhrsf",
 });
 
 // Add a request interceptor
