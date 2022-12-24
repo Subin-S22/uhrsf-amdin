@@ -161,21 +161,30 @@ const UserForm = () => {
     try {
       const formData = new FormData();
 
+      console.log(values.aadharCardLink instanceof Object);
+      console.log(typeof values.aadharCardLink);
+
       if (values.aadharCardLink instanceof Object) {
         formData.append("aadharCard", values.aadharCardLink);
       } else {
-        formData.append("aadharCard", "");
+        formData.append("aadharCard", new Blob([new Uint8Array([])]));
       }
-      if (values.aadharCardLink instanceof Object) {
+      if (values.panCardLink instanceof Object) {
         formData.append("pancard", values.panCardLink);
       } else {
-        formData.append("pancard", "");
+        formData.append("pancard", new Blob([new Uint8Array([])]))
       }
-      if (values.aadharCardLink instanceof Object) {
+      if (values.memberPhotoLink instanceof Object) {
         formData.append("memberPhoto", values.memberPhotoLink);
       } else {
-        formData.append("memberPhoto", "");
+        formData.append("memberPhoto", new Blob([new Uint8Array([])]));
       }
+
+      delete values.temporaryMemberId;
+      delete values.status;
+      delete values.aadharCardLink;
+      delete values.panCardLink;
+      delete values.memberPhotoLink;
 
       formData.append("memberRegister", JSON.stringify(values));
 
