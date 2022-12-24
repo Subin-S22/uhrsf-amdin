@@ -128,7 +128,6 @@ const UserForm = () => {
       props.handleChange(e);
       if (e.target.value.length > 9) {
         const res = await referralName(e.target.value);
-        console.log(res);
         props.setFieldValue("referredByName", res.data.data.referredName);
       }
     } catch (err) {
