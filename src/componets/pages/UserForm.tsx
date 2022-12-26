@@ -211,7 +211,7 @@ const UserForm = () => {
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
 
-  console.log(title);
+  console.log(isEdit, title);
 
   return (
     <Laytout>
@@ -486,7 +486,7 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="save"
-                isVisible={!isEdit && addUserCategory.includes(title as string)}
+                isVisible={isEdit && addUserCategory.includes(title as string)}
                 onClick={() => addMembers(props.values)}
               >
                 Save
