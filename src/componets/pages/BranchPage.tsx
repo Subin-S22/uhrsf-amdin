@@ -11,6 +11,7 @@ const BranchPage = (props: Props) => {
 
   const fetchApplicationReceived = async () => {
     try {
+      toast.dismiss();
       const loading = toast.loading("loading...");
       const res = await branchList();
 
@@ -18,6 +19,7 @@ const BranchPage = (props: Props) => {
         render: "Loaded",
         type: "success",
         isLoading: false,
+        autoClose: 3000,
       });
       setReceived(res.data.data);
     } catch (err) {

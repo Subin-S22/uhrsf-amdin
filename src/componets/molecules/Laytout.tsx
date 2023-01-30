@@ -52,12 +52,9 @@ const Laytout = ({ children }: Props) => {
     <main className="bg-slate-100 h-full">
       <ToastContainer
         position="bottom-right"
-        autoClose={2000}
-        closeOnClick
-        pauseOnHover
-        hideProgressBar={false}
-        limit={3}
         newestOnTop={true}
+        closeOnClick
+        autoClose={2000}
         transition={Zoom}
       />
       <Navbar

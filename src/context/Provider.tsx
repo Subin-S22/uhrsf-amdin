@@ -5,6 +5,7 @@ export interface Store {
     tableName: string;
     userDetails: any;
     title: string;
+    presentPage: string;
     branchDetails: any;
     branchCount: number;
   };
@@ -12,6 +13,7 @@ export interface Store {
     setTableName: React.Dispatch<React.SetStateAction<string>>;
     setUserDetails: React.Dispatch<React.SetStateAction<{}>>;
     setTitle: React.Dispatch<React.SetStateAction<string>>;
+    setPresentPage: React.Dispatch<React.SetStateAction<string>>;
     setBranchDetails: React.Dispatch<React.SetStateAction<{}>>;
     setBranchCount: React.Dispatch<React.SetStateAction<number>>;
   };
@@ -25,6 +27,7 @@ const Provider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [branchDetails, setBranchDetails] = useState({});
   const [branchCount, setBranchCount] = useState(0);
+  const [presentPage, setPresentPage] = useState('')
 
   const store = {
     data: {
@@ -33,6 +36,7 @@ const Provider = ({ children }) => {
       title,
       branchDetails,
       branchCount,
+      presentPage
     },
     action: {
       setTableName,
@@ -40,6 +44,7 @@ const Provider = ({ children }) => {
       setTitle,
       setBranchDetails,
       setBranchCount,
+      setPresentPage
     },
   };
 

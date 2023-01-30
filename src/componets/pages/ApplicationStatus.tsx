@@ -15,8 +15,9 @@ const ApplicationStatus = (props: Props) => {
   const store = useContext(Context);
 
   const fetchApplicationStatus = useCallback(async () => {
+    toast.dismiss();
+    const loading = toast.loading("loading...");
     try {
-      const loading = toast.loading("loading...");
       if (status === "view-all") {
         //get all applications
         const res = await viewAllApplication();
@@ -38,6 +39,7 @@ const ApplicationStatus = (props: Props) => {
         render: "Successfull",
         type: "success",
         isLoading: false,
+        autoClose: 3000,
       });
     } catch (err: unknown) {
       if (typeof err === "string") toast.error(err);

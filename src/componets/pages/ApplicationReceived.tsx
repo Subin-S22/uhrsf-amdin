@@ -10,15 +10,16 @@ const Application = (props: Props) => {
   const [received, setReceived] = useState([]);
 
   const fetchApplicationReceived = async () => {
-    let loading;
+    toast.dismiss();
+    let loading = toast.loading("loading...");
     try {
-      loading = toast.loading("loading...");
       const res = await yetToApprove();
       setReceived(res.data.data);
       toast.update(loading, {
         render: "Successfull",
         isLoading: false,
         type: "success",
+        autoClose: 3000,
       });
     } catch (err) {
       console.log(err);
@@ -26,6 +27,7 @@ const Application = (props: Props) => {
         render: "Failed",
         isLoading: false,
         type: "error",
+        autoClose: 3000,
       });
     }
   };

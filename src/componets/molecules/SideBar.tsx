@@ -41,10 +41,6 @@ const sideBarOptions = [
         name: "List Members",
         value: "members",
       },
-      {
-        name: "Disabled Members",
-        value: "disabled members",
-      },
     ],
   },
   {
@@ -62,6 +58,10 @@ const sideBarOptions = [
       {
         name: "Add User",
         value: "add-user",
+      },
+      {
+        name: "Disabled Members",
+        value: "disabled members",
       },
     ],
   },
@@ -90,7 +90,10 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       handleSideBarClose();
     }
   };
-  const handleRouting = (route: string, name?: string) => {
+  const handleRouting = (route: string) => {
+    console.log("route", route);
+
+    store?.action.setPresentPage(route);
     switch (route) {
       case "dashboard":
         sideBarAction();
@@ -144,6 +147,8 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
       default:
     }
   };
+  console.log(store?.data.tableName, store?.data.presentPage);
+
   return (
     <>
       {openSidebar ? (
@@ -176,7 +181,12 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
           </div>
         </div>
         <li
-          className="text-base cursor-pointer font-medium text-white p-2 m-2 "
+          className={`text-base cursor-pointer font-medium text-white p-2 m-2 ${
+            store?.data.presentPage === "" ||
+            store?.data.presentPage === "dashboard"
+              ? "bg-blue-700"
+              : ""
+          } `}
           onClick={() => {
             handleRouting("dashboard");
             sideBarAction();
@@ -188,12 +198,11 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
           <Accordion
             key={index}
             className={`!bg-dark_blue text-white my-0 ml-2 `}
-            onClick={() => handleRouting(sidebar.name)}
           >
             <AccordionSummary
               aria-controls={sidebar.name}
               id={`${sidebar.name}${index}`}
-              className="inner_div_flex text-base lg:text-lg"
+              className={`inner_div_flex text-base lg:text-lg`}
             >
               <span className="text-base ">{sidebar.name}</span>
               {sidebar.sub?.length && <FiChevronDown />}
@@ -205,8 +214,12 @@ const SideBar = ({ openSidebar, handleSideBarClose }: Props) => {
                     return (
                       <li
                         key={index}
-                        onClick={() => handleRouting(side.value, side.name)}
-                        className="text-sm font-medium text-slate-300 p-2 m-2 cursor-pointer"
+                        onClick={() => handleRouting(side.value)}
+                        className={`text-sm font-medium text-slate-300 p-2 m-2 cursor-pointer ${
+                          store?.data.presentPage === side.value
+                            ? "bg-blue-700"
+                            : "dummy"
+                        }`}
                       >
                         {side.name}
                       </li>

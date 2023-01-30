@@ -19,6 +19,7 @@ const BranchForm = (props: Props) => {
 
   const onSubmit = async (values) => {
     try {
+      toast.dismiss();
       const loading = toast.loading("please wait...");
 
       await addBranch(values);
@@ -27,6 +28,7 @@ const BranchForm = (props: Props) => {
         render: "Branch added succesfully",
         type: "success",
         isLoading: false,
+        autoClose: 3000,
       });
     } catch (err: unknown) {
       if (typeof err === "string") {

@@ -52,7 +52,7 @@ const addUserCategory = ["AddUser"];
 const UserForm = () => {
   const store = useContext(Context);
   const [isEdit, setIsEdit] = useState(false);
-  const [userObject, setUserObject] = useState<any>({});
+  const [userObject, setUserObject] = useState<any>({ nationality: "INDIAN" });
   const [photos, setPhotos] = useState({
     aadharPhoto: "",
     pancardPhoto: "",
@@ -94,6 +94,7 @@ const UserForm = () => {
         render: "Loaded",
         type: "success",
         isLoading: false,
+        autoClose: 3000,
       });
 
       setUserObject(res.data.data);
@@ -139,9 +140,21 @@ const UserForm = () => {
     try {
       const formData = new FormData();
 
-      formData.append("aadharCard", values.aadharCardLink);
-      formData.append("pancard", values.panCardLink);
-      formData.append("memberPhoto", values.memberPhotoLink);
+      if (values.aadharCardLink) {
+        formData.append("aadharCard", values.aadharCardLink);
+      } else {
+        formData.append("aadharCard", new Blob([new Uint8Array([])]));
+      }
+      if (values.panCardLink) {
+        formData.append("pancard", values.panCardLink);
+      } else {
+        formData.append("pancard", new Blob([new Uint8Array([])]));
+      }
+      if (values.memberPhotoLink) {
+        formData.append("memberPhoto", values.memberPhotoLink);
+      } else {
+        formData.append("memberPhoto", new Blob([new Uint8Array([])]));
+      }
       delete values.aadharCardLink;
       delete values.panCardLink;
       delete values.memberPhotoLink;
@@ -172,7 +185,7 @@ const UserForm = () => {
       if (values.panCardLink instanceof Object) {
         formData.append("pancard", values.panCardLink);
       } else {
-        formData.append("pancard", new Blob([new Uint8Array([])]))
+        formData.append("pancard", new Blob([new Uint8Array([])]));
       }
       if (values.memberPhotoLink instanceof Object) {
         formData.append("memberPhoto", values.memberPhotoLink);
@@ -270,7 +283,7 @@ const UserForm = () => {
             <Field name="address" label="Address" disabled={!isEdit} />
             <Field name="state" label="State" disabled={!isEdit} />
             <Field name="city" label="City" disabled={!isEdit} />
-            <Field name="nationality" label="Nationality" disabled={!isEdit} />
+            <Field name="nationality" label="Nationality" disabled={true} />
             <Field name="pincode" label="Pincode" disabled={!isEdit} />
             <Field name="aadharcard" label="Aadharcard" disabled={!isEdit} />
             <Field name="pancard" label="Pancard" disabled={!isEdit} />
@@ -487,6 +500,7 @@ const UserForm = () => {
               <Button
                 variant="save"
                 isVisible={isEdit && addUserCategory.includes(title as string)}
+                type="submit"
                 onClick={() => addMembers(props.values)}
               >
                 Save
