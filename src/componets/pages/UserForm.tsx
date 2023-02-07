@@ -457,7 +457,7 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="approve"
-                onClick={() => approvalStatus(props.values, "APPROVED")}
+                onClick={() => approvalStatus(props.values, "MEMBER")}
                 type="submit"
                 isVisible={!isEdit && approveCategory.includes(title as string)}
               >
@@ -493,6 +493,7 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="enable"
+                onClick={() => approvalStatus(props.values, "ENABLE")}
                 isVisible={!isEdit && enableCategory.includes(title as string)}
               >
                 Enable
