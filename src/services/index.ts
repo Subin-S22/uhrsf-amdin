@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const baseAxios = axios.create({
   baseURL: "http://csnservernet.tech/uhrsf_dev/api/v1/uhrsf/",
