@@ -480,7 +480,7 @@ const UserForm = () => {
               <Button
                 type="submit"
                 variant="disable"
-                isVisible={!isEdit && disableCategory.includes(title as string)}
+                isVisible={!isEdit && memberCategory.includes(title as string)}
                 onClick={() => approvalStatus(props.values, "MEMBER")}
               >
                 Member
