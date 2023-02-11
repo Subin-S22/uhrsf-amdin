@@ -13,6 +13,7 @@ import {
 } from "../../services/admin";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
 
 const Qualification = [
   "Illiterate",
@@ -160,11 +161,13 @@ const UserForm = () => {
       delete values.memberPhotoLink;
       formData.append("memberRegister", JSON.stringify(values));
       await memberRegister(formData);
-      navigate("/");
       toast.success("member added successfully");
+      navigate("/");
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
+      } else if (err instanceof AxiosError) {
+        toast.error(err.response?.data.message);
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
@@ -259,6 +262,7 @@ const UserForm = () => {
               label="Date of Birth"
               disabled={!isEdit}
               type="date"
+              max={new Date().toJSON().split("T")[0]}
               value={props.values?.dob?.split("T")[0]}
             />
             <Field

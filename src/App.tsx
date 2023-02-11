@@ -23,7 +23,7 @@ function App() {
 
   const getMembers = async () => {
     try {
-      const res = await getByStatus("approved");
+      const res = await getByStatus("member");
 
       setMembers(res.data.data);
     } catch (err) {
