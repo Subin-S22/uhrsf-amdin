@@ -50,6 +50,8 @@ const enableCategory = ["Disabled Members"];
 
 const addUserCategory = ["AddUser"];
 
+const memberCategory = ["Executives"];
+
 const UserForm = () => {
   const store = useContext(Context);
   const [isEdit, setIsEdit] = useState(false);
@@ -474,6 +476,14 @@ const UserForm = () => {
                 onClick={() => approvalStatus(props.values, "DISABLE")}
               >
                 Disable
+              </Button>
+              <Button
+                type="submit"
+                variant="disable"
+                isVisible={!isEdit && disableCategory.includes(title as string)}
+                onClick={() => approvalStatus(props.values, "MEMBER")}
+              >
+                Member
               </Button>
               <Button
                 type="submit"
