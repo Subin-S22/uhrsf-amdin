@@ -25,7 +25,7 @@ const ApplicationStatus = (props: Props) => {
       } else if (status) {
         let params: string = status;
         if (status === "members") {
-          params = "approved";
+          params = "member";
         } else if (status === "disabled members") {
           params = "disable";
         }
