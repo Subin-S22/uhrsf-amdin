@@ -128,3 +128,12 @@ export const addBranch = async (reqBody) => {
     throw err;
   }
 };
+
+export const adminUpdateDetails = async (reqBody) => {
+  try {
+    const res = await baseAxios.put("/admin-update", reqBody);
+    return res;
+  } catch (err) {
+    throw err;
+  }
+};
