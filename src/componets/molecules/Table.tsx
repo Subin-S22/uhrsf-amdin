@@ -32,7 +32,7 @@ interface Data {
   view: string;
   state: string;
   city: string;
-  dob: string;
+  mobileNumber: string;
   uhrsfMemberId: string;
 }
 
@@ -110,10 +110,10 @@ const headCells: readonly HeadCell[] = [
     label: "City",
   },
   {
-    id: "dob",
+    id: "mobileNumber",
     numeric: false,
     disablePadding: false,
-    label: "DateTime",
+    label: "Phone Number",
   },
   {
     id: "view",
@@ -366,7 +366,7 @@ export default function EnhancedTable({ title, search, data }: Props) {
                       <TableCell>{row.firstAndLastName}</TableCell>
                       <TableCell>{row.state}</TableCell>
                       <TableCell>{row.city}</TableCell>
-                      <TableCell>{dateFormat(row.dob as string)}</TableCell>
+                      <TableCell>{row.mobileNumber}</TableCell>
                       <TableCell onClick={(event) => handleClick(event, row)}>
                         <AiFillEye />
                       </TableCell>
