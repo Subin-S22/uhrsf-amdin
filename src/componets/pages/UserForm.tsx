@@ -12,8 +12,9 @@ import {
   updateStatus,
 } from "../../services/admin";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
+import * as Yup from "yup";
 
 const Qualification = [
   "Illiterate",
@@ -52,10 +53,82 @@ const addUserCategory = ["AddUser"];
 
 const memberCategory = ["Executives"];
 
+const phoneRegExp =
+  /^[\\+]?[(]?[0-9]{3}[)]?[-\s\\.]?[0-9]{3}[-\s\\.]?[0-9]{4,6}$/im;
+const aadharRegex = /^\d{4}[\s-]?\d{4}[\s-]?\d{4}$/;
+const panRegex = /[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+const validation = Yup.object({
+  firstAndLastName: Yup.string()
+    .min(3, "too short!")
+    .max(256, "too long!")
+    .required("Required!"),
+  emailId: Yup.string().email("Invalid Email").required("Required"),
+  parentsName: Yup.string()
+    .min(3, "too short!")
+    .max(256, "too long!")
+    .required("Required!"),
+  mobileNumber: Yup.string()
+    .matches(phoneRegExp, "Phone number is not valid")
+    .max(10, "Phone number should be 10 digits")
+    .required("Required"),
+  dob: Yup.string().required("DOB is Required"),
+  gender: Yup.string().required("Required"),
+  bloodGroup: Yup.string().required("Required"),
+  qualification: Yup.string().required("Required"),
+  profession: Yup.string().required("Required"),
+  referredBy: Yup.string(),
+  referredByName: Yup.string(),
+  address: Yup.string()
+    .min(3, "too short!")
+    .max(256, "too long!")
+    .required("Required!"),
+  city: Yup.string().required("Required"),
+  state: Yup.string().required("Required"),
+  pincode: Yup.string().max(6, "too long!").required("Required"),
+  nationality: Yup.string(),
+  aadharcard: Yup.string()
+    .matches(aadharRegex, "Aadhar is not valid")
+    .required("Required."),
+  aadharCardLink: Yup.string().required("Required."),
+  pancard: Yup.string()
+    .matches(panRegex, "Pan card number is not valid")
+    .required("Required."),
+  panCardLink: Yup.string().required("Required."),
+  memberPhotoLink: Yup.string().required("Required."),
+});
+
+type Initial = Yup.InferType<typeof validation>;
+
+const initialValues: Initial = {
+  firstAndLastName: "",
+  emailId: "",
+  parentsName: "",
+  mobileNumber: "",
+  dob: "",
+  gender: "",
+  bloodGroup: "",
+  qualification: "",
+  profession: "",
+  referredBy: "",
+  referredByName: "",
+  aadharcard: "",
+  aadharCardLink: "",
+  address: "",
+  city: "",
+  memberPhotoLink: "",
+  pancard: "",
+  panCardLink: "",
+  pincode: "",
+  state: "",
+  nationality: "INDIAN",
+};
+
 const UserForm = () => {
   const store = useContext(Context);
   const [isEdit, setIsEdit] = useState(false);
-  const [userObject, setUserObject] = useState<any>({ nationality: "INDIAN" });
+  const [btnClicked, setBtnClicked] = useState<string>("");
+  const [userObject, setUserObject] = useState<Initial>(initialValues);
   const [photos, setPhotos] = useState({
     aadharPhoto: "",
     pancardPhoto: "",
@@ -63,7 +136,7 @@ const UserForm = () => {
   });
   console.log(photos);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   const title = store?.data.title;
 
@@ -79,10 +152,11 @@ const UserForm = () => {
         approvalStatus: status,
       });
       toast.success(updated.data.message);
-      navigate(-1);
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
+      } else if (err instanceof AxiosError) {
+        toast.error(err.response?.data.message || err.message);
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
@@ -164,12 +238,11 @@ const UserForm = () => {
       formData.append("memberRegister", JSON.stringify(values));
       await memberRegister(formData);
       toast.success("member added successfully");
-      navigate("/");
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
       } else if (err instanceof AxiosError) {
-        toast.error(err.response?.data.message);
+        toast.error(err.response?.data.message || err.message);
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
@@ -207,11 +280,12 @@ const UserForm = () => {
       formData.append("memberRegister", JSON.stringify(values));
 
       await updateMember(formData);
-      navigate("/");
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
+      } else if (err instanceof AxiosError) {
+        toast.error(err.response?.data.message || err.message);
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
@@ -229,14 +303,45 @@ const UserForm = () => {
     return () => window.removeEventListener("beforeunload", unloadCallback);
   }, []);
 
-  console.log(isEdit, title);
+  const onSubmit = async (values) => {
+    switch (btnClicked) {
+      case "save":
+        await addMembers(values);
+        return;
+      case "update":
+        await updateMembers(values);
+        return;
+      case "approve":
+        approvalStatus(values, "MEMBER");
+        return;
+      case "member":
+        approvalStatus(values, "MEMBER");
+        return;
+      case "executive":
+        approvalStatus(values, "EXECUTIVE");
+        return;
+      case "enable":
+        approvalStatus(values, "ENABLE");
+        return;
+      case "disable":
+        approvalStatus(values, "DISABLE");
+        return;
+      case "reject":
+        approvalStatus(values, "REJECTED");
+        return;
+      default:
+        return;
+    }
+  };
+  console.log(title, isEdit);
 
   return (
     <Laytout>
       <Formik
         initialValues={userObject}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={onSubmit}
         enableReinitialize
+        validationSchema={validation}
       >
         {(props: FormikProps<any>) => (
           <Form className="flex flex-col lg:grid lg:grid-cols-2 mx-10 md:mx-20 gap-6 p-8 shadow-[0px_2px_8px_1px_gray] rounded-md bg-white">
@@ -311,6 +416,7 @@ const UserForm = () => {
               <input
                 type="file"
                 id="aadharcardphoto"
+                disabled={!isEdit}
                 name="aadharCardLink"
                 className="border border-gray-400 p-2 rounded-md w-full"
                 onChange={(e) => {
@@ -326,8 +432,7 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.aadharCardLink?.name ||
-                    props.values?.aadharCardLink}
+                  {props.values?.aadharCardLink?.name || "aadharphoto"}
                 </span>
                 {!isEdit ? (
                   <span
@@ -359,6 +464,7 @@ const UserForm = () => {
               <label>Pancard Photo</label>
               <input
                 type="file"
+                disabled={!isEdit}
                 name="panCardLink"
                 id="pancardphoto"
                 className="border border-gray-400 p-2 rounded-md w-full"
@@ -375,7 +481,7 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.panCardLink?.name || props.values?.panCardLink}
+                  {props.values?.panCardLink?.name || "pancard"}
                 </span>
                 {!isEdit ? (
                   <span
@@ -405,6 +511,7 @@ const UserForm = () => {
             <div className="flex flex-col">
               <label>Profile Photo</label>
               <input
+                disabled={!isEdit}
                 type="file"
                 name="memberPhotoLink"
                 id="profilephoto"
@@ -422,8 +529,7 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.memberPhotoLink?.name ||
-                    props.values?.memberPhotoLink}
+                  {props.values?.memberPhotoLink?.name || "member"}
                 </span>
                 {!isEdit ? (
                   <span
@@ -451,7 +557,13 @@ const UserForm = () => {
               />
             )} */}
             <div className="flex justify-center items-center w-full lg:col-span-2 flex-wrap gap-4">
-              <Button variant="disable" onClick={() => navigate(-1)}>
+              <Button
+                variant="disable"
+                onClick={() => {
+                  if (title === "AddUser") setIsEdit(true);
+                  else setIsEdit(false);
+                }}
+              >
                 Back
               </Button>
               <Button
@@ -463,7 +575,9 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="approve"
-                onClick={() => approvalStatus(props.values, "MEMBER")}
+                name="approve"
+                onClick={() => setBtnClicked("approve")}
+                // onClick={() => approvalStatus(props.values, "MEMBER")}
                 type="submit"
                 isVisible={!isEdit && approveCategory.includes(title as string)}
               >
@@ -472,32 +586,40 @@ const UserForm = () => {
               <Button
                 type="submit"
                 variant="disable"
+                name="disable"
                 isVisible={!isEdit && disableCategory.includes(title as string)}
-                onClick={() => approvalStatus(props.values, "DISABLE")}
+                onClick={() => setBtnClicked("disable")}
+                // onClick={() => approvalStatus(props.values, "DISABLE")}
               >
                 Disable
               </Button>
               <Button
                 type="submit"
                 variant="disable"
+                name="member"
                 isVisible={!isEdit && memberCategory.includes(title as string)}
-                onClick={() => approvalStatus(props.values, "MEMBER")}
+                onClick={() => setBtnClicked("member")}
+                // onClick={() => approvalStatus(props.values, "MEMBER")}
               >
                 Member
               </Button>
               <Button
                 type="submit"
                 variant="reject"
+                name="reject"
                 isVisible={
                   !isEdit && rejectedCategory.includes(title as string)
                 }
-                onClick={() => approvalStatus(props.values, "REJECTED")}
+                onClick={() => setBtnClicked("reject")}
+                // onClick={() => approvalStatus(props.values, "REJECTED")}
               >
                 Reject
               </Button>
               <Button
                 type="submit"
-                onClick={() => approvalStatus(props.values, "EXECUTIVE")}
+                name="executive"
+                onClick={() => setBtnClicked("executive")}
+                // onClick={() => approvalStatus(props.values, "EXECUTIVE")}
                 variant="executive"
                 isVisible={
                   !isEdit && executiveCategory.includes(title as string)
@@ -507,7 +629,9 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="enable"
-                onClick={() => approvalStatus(props.values, "ENABLE")}
+                name="enable"
+                onClick={() => setBtnClicked("enable")}
+                // onClick={() => approvalStatus(props.values, "ENABLE")}
                 isVisible={!isEdit && enableCategory.includes(title as string)}
               >
                 Enable
@@ -516,14 +640,18 @@ const UserForm = () => {
                 variant="save"
                 isVisible={isEdit && addUserCategory.includes(title as string)}
                 type="submit"
-                onClick={() => addMembers(props.values)}
+                name="save"
+                onClick={() => setBtnClicked("save")}
+                // onClick={() => addMembers(props.values)}
               >
                 Save
               </Button>
               <Button
                 variant="save"
+                name="update"
+                onClick={() => setBtnClicked("update")}
                 isVisible={isEdit && !addUserCategory.includes(title as string)}
-                onClick={() => updateMembers(props.values)}
+                // onClick={() => updateMembers(props.values)}
               >
                 Update
               </Button>

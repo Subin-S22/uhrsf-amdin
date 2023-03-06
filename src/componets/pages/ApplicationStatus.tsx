@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
-import { getByStatus, viewAllApplication } from "../../services/admin";
+import { getByStatus, yetToApprove } from "../../services/admin";
 import Laytout from "../molecules/Laytout";
 import CustTable from "../molecules/Table";
 import { Context } from "../../context";
@@ -20,11 +20,11 @@ const ApplicationStatus = (props: Props) => {
     try {
       if (status === "view-all") {
         //get all applications
-        const res = await viewAllApplication();
+        const res = await yetToApprove();
         setReceived(res.data.data);
       } else if (status) {
         let params: string = status;
-        if (status === "members") {
+        if (status === "members" || status === "approved") {
           params = "member";
         } else if (status === "disabled members") {
           params = "disable";

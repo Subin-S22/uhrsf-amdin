@@ -21,15 +21,15 @@ const sideBarOptions = [
     name: "Application",
     sub: [
       {
-        name: "View All",
+        name: "Pending Applications",
         value: "viewAll",
       },
       {
-        name: "Approved Application List",
+        name: "Approved Applications",
         value: "approved",
       },
       {
-        name: "Rejected Application List",
+        name: "Rejected Applications",
         value: "rejected",
       },
     ],

@@ -2,7 +2,7 @@ import React from "react";
 
 interface Props
   extends React.DetailedHTMLProps<
-    React.HTMLAttributes<HTMLButtonElement>,
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     HTMLButtonElement
   > {
   variant?:

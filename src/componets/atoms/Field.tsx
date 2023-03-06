@@ -1,5 +1,6 @@
 import React from "react";
-import { Field as F, ErrorMessage as E, FieldAttributes } from "formik";
+import { Field as F, FieldAttributes } from "formik";
+import Error from "./Error";
 
 interface Props extends FieldAttributes<any> {
   name: string;
@@ -36,7 +37,7 @@ const Field = ({ name, label, options, ...props }: Props) => {
           {...props}
         />
       )}
-      <E name="email" />
+      <Error name={name} />
     </div>
   );
 };
