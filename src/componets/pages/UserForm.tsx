@@ -432,7 +432,9 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.aadharCardLink?.name || "aadharphoto"}
+                  {isEdit && !props.values?.aadharCardLink?.name
+                    ? "Select photo..."
+                    : props.values?.aadharCardLink?.name || "aadharphoto"}
                 </span>
                 {!isEdit ? (
                   <span
@@ -481,7 +483,9 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.panCardLink?.name || "pancard"}
+                  {isEdit && !props.values?.panCardLink?.name
+                    ? "Select photo..."
+                    : props.values?.panCardLink?.name || "pancard photo"}
                 </span>
                 {!isEdit ? (
                   <span
@@ -529,7 +533,9 @@ const UserForm = () => {
                 className="border border-gray-400 rounded-md w-full h-12 flex justify-between items-center pl-2"
               >
                 <span className="truncate">
-                  {props.values?.memberPhotoLink?.name || "member"}
+                  {isEdit && !props.values?.memberPhotoLink?.name
+                    ? "Select photo..."
+                    : props.values?.memberPhotoLink?.name || "member photo"}
                 </span>
                 {!isEdit ? (
                   <span
