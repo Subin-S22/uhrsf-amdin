@@ -302,16 +302,6 @@ export default function EnhancedTable({ title, search, data }: Props) {
     filterData();
   }, [filterData, searchValue]);
 
-  console.log(title);
-  const dateFormat = (date: string) => {
-    const splitDateTime = date?.split("T")[0];
-    return new Date(splitDateTime).toLocaleDateString("en-IN", {
-      month: "2-digit",
-      day: "2-digit",
-      year: "numeric",
-    });
-  };
-
   return (
     <Box sx={{ width: "100%" }}>
       <Paper sx={{ width: "100%", mb: 2 }}>
