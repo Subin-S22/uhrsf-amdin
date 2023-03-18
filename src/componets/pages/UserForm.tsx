@@ -4,6 +4,7 @@ import Laytout from "../molecules/Laytout";
 import Field from "../atoms/Field";
 import Button from "../atoms/Button";
 import { Context } from "../../context";
+import { State, City } from "country-state-city";
 import {
   getMemberDetailsById,
   memberRegister,
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 // import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import * as Yup from "yup";
+import { ICity, IState } from "country-state-city/lib/interface";
 
 const Qualification = [
   "Illiterate",
@@ -133,6 +135,8 @@ const UserForm = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [btnClicked, setBtnClicked] = useState<string>("");
   const [userObject, setUserObject] = useState<Initial>(initialValues);
+  const [states, setStates] = useState<IState[] | null>([]);
+  const [cities, setCities] = useState<ICity[] | null>([]);
   const [photos, setPhotos] = useState({
     aadharPhoto: "",
     pancardPhoto: "",
@@ -199,6 +203,7 @@ const UserForm = () => {
     if (store?.data.userDetails?.uhrsfMemberId) {
       getMemberDetails(store?.data.userDetails.uhrsfMemberId);
     }
+    setStates(State.getStatesOfCountry("IN"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -337,7 +342,7 @@ const UserForm = () => {
         return;
     }
   };
-  console.log(title, isEdit);
+  console.log(states);
 
   return (
     <Laytout>
@@ -396,8 +401,31 @@ const UserForm = () => {
             />
             <Field name="profession" label="Profession" disabled={!isEdit} />
             <Field name="address" label="Address" disabled={!isEdit} />
-            <Field name="state" label="State" disabled={!isEdit} />
-            <Field name="city" label="City" disabled={!isEdit} />
+            <Field
+              name="state"
+              label="State"
+              disabled={!isEdit}
+              options={states?.map((state) => state.name)}
+              onChange={(e: any) => {
+                props.handleChange(e);
+                const state = states?.find(
+                  (state) => state.name === e.target.value
+                );
+
+                setCities(
+                  City.getCitiesOfState(
+                    state?.countryCode as string,
+                    state?.isoCode as string
+                  )
+                );
+              }}
+            />
+            <Field
+              name="city"
+              label="City"
+              disabled={!isEdit}
+              options={cities?.map((city) => city.name)}
+            />
             <Field name="nationality" label="Nationality" disabled={true} />
             <Field name="pincode" label="Pincode" disabled={!isEdit} />
             <Field name="aadharcard" label="Aadharcard" disabled={!isEdit} />

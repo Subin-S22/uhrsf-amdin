@@ -290,7 +290,11 @@ export default function EnhancedTable({ title, search, data }: Props) {
     if (searchValue === "") setRows(allRows as any);
     else {
       const temp: any = allRows?.filter((row) => {
-        return row.firstAndLastName.includes(searchValue);
+        return (
+          row.firstAndLastName.includes(searchValue) |
+          row.uhrsfMemberId.includes(searchValue) |
+          row.phoneNumber.includes(searchValue)
+        );
       });
       console.log(temp);
 

@@ -6,6 +6,7 @@ interface Props extends FieldAttributes<any> {
   name: string;
   label: string;
   options?: any[];
+  props?: FieldAttributes<any>;
 }
 
 const Field = ({ name, label, options, ...props }: Props) => {
