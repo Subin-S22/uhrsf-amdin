@@ -51,8 +51,9 @@ const BranchForm = (props: Props) => {
             <h1 className="font-bold text-2xl mt-2 mb-4 lg:col-span-2">
               Add Branch
             </h1>
-            <Field name="branchName" label="Branch Name" />
+            <Field name="contactName" label="Contact Name" />
             <Field name="phoneNumber" label="Phone Number" />
+            <Field name="emailId" label="Email Id" />
             <Field name="state" label="State" />
             <Field name="city" label="City" />
             <Field name="address" label="Address" />

@@ -32,7 +32,7 @@ const BloodGroup = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
 const disableCategory = ["Application Approved", "Members", "Executives"];
 
 const editCategory = [
-  "Applications",
+  "Pending Applications",
   "Application Received",
   "Application Approved",
   "Application Rejected",
@@ -41,9 +41,13 @@ const editCategory = [
   "Executives",
 ];
 
-const approveCategory = ["Application Received", "Application Rejected"];
+const approveCategory = [
+  "Application Received",
+  "Application Rejected",
+  "Pending Applications",
+];
 
-const rejectedCategory = ["Application Received"];
+const rejectedCategory = ["Application Received", "Pending Applications"];
 
 const executiveCategory = ["Application Approved", "Members"];
 

@@ -4,6 +4,7 @@ import Laytout from "./componets/molecules/Laytout";
 import Table from "./componets/molecules/Table";
 import BranchTable from "./componets/molecules/BranchesTable";
 import { branchList, getByStatus, yetToApprove } from "./services/admin";
+import axios from "axios";
 
 function App() {
   const [received, setReceived] = useState([]);
@@ -44,7 +45,17 @@ function App() {
     getYettoApprove();
     getBranchList();
     getMembers();
+    getImage();
   }, []);
+
+  const getImage = async () => {
+    const data = await axios.get(
+      "http://csnservernet.tech/uhrsf_dev/api/v1/uhrsf/files/UHRSFA0021/adharcard"
+    );
+
+    const b = new Blob(data.data, { type: "image/jpeg" });
+    console.log(b);
+  };
 
   return (
     <Laytout>

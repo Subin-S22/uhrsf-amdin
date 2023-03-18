@@ -27,7 +27,7 @@ const Provider = ({ children }) => {
   const [title, setTitle] = useState("");
   const [branchDetails, setBranchDetails] = useState({});
   const [branchCount, setBranchCount] = useState(0);
-  const [presentPage, setPresentPage] = useState('')
+  const [presentPage, setPresentPage] = useState("");
 
   const store = {
     data: {
@@ -36,7 +36,7 @@ const Provider = ({ children }) => {
       title,
       branchDetails,
       branchCount,
-      presentPage
+      presentPage,
     },
     action: {
       setTableName,
@@ -44,7 +44,7 @@ const Provider = ({ children }) => {
       setTitle,
       setBranchDetails,
       setBranchCount,
-      setPresentPage
+      setPresentPage,
     },
   };
 
