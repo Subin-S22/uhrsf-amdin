@@ -16,7 +16,6 @@ interface Props {}
 const BranchForm = (props: Props) => {
   const store = useContext(Context);
   const branchDetails = store?.data.branchDetails;
-  const [states, setStates] = useState<IState[] | null>([]);
   const [cities, setCities] = useState<ICity[] | null>([]);
 
   const navigate = useNavigate();
