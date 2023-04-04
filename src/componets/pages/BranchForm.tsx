@@ -9,11 +9,9 @@ import Laytout from "../molecules/Laytout";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../../context";
 import { State, City } from "country-state-city";
-import { ICity, IState } from "country-state-city/lib/interface";
+import { ICity } from "country-state-city/lib/interface";
 
-interface Props {}
-
-const BranchForm = (props: Props) => {
+const BranchForm = () => {
   const store = useContext(Context);
   const branchDetails = store?.data.branchDetails;
   const [cities, setCities] = useState<ICity[] | null>([]);
