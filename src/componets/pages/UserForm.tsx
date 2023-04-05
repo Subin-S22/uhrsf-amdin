@@ -13,7 +13,7 @@ import {
   updateStatus,
 } from "../../services/admin";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import * as Yup from "yup";
 import { ICity, IState } from "country-state-city/lib/interface";
@@ -144,7 +144,7 @@ const UserForm = () => {
   });
   console.log(photos);
 
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const title = store?.data.title;
 
@@ -600,6 +600,9 @@ const UserForm = () => {
                 onClick={() => {
                   if (title === "AddUser") setIsEdit(true);
                   else setIsEdit(false);
+                  if (!isEdit) {
+                    navigate(-1);
+                  }
                 }}
               >
                 Back
