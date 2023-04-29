@@ -27,7 +27,7 @@ const Field = ({ name, label, options, ...props }: Props) => {
             Select...
           </option>
           {options.map((value) => (
-            <option>{value}</option>
+            <option value={value}>{value}</option>
           ))}
         </F>
       ) : (

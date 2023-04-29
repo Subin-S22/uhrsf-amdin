@@ -386,18 +386,21 @@ const UserForm = () => {
               label="Gender"
               options={Genders}
               disabled={!isEdit}
+              value={props.values.gender}
             />
             <Field
               name="bloodGroup"
               label="Blood Group"
               disabled={!isEdit}
               options={BloodGroup}
+              value={props.values.bloodGroup}
             />
             <Field
               name="qualification"
               label="Qualification"
               options={Qualification}
               disabled={!isEdit}
+              value={props.values.qualification}
             />
             <Field name="profession" label="Profession" disabled={!isEdit} />
             <Field name="address" label="Address" disabled={!isEdit} />

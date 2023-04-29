@@ -12,6 +12,8 @@ import BranchForm from "./componets/pages/BranchForm";
 import { Provider } from "./context";
 import BranchPage from "./componets/pages/BranchPage";
 import Profile from "./componets/pages/Profile";
+import { ToastContainer, Zoom } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { ToastContainer } from "react-toastify";
 // import 'react-toastify/dist/ReactToastify.css';
 
@@ -21,6 +23,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider>
+    <ToastContainer
+      position="bottom-right"
+      newestOnTop={true}
+      closeOnClick
+      autoClose={2000}
+      transition={Zoom}
+    />
     <BrowserRouter>
       <Routes>
         <Route index path="/login" element={<Login />} />

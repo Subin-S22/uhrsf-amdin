@@ -4,7 +4,6 @@ import Laytout from "./componets/molecules/Laytout";
 import Table from "./componets/molecules/Table";
 import BranchTable from "./componets/molecules/BranchesTable";
 import { branchList, getByStatus, yetToApprove } from "./services/admin";
-import axios from "axios";
 
 function App() {
   const [received, setReceived] = useState([]);

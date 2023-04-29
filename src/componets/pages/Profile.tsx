@@ -77,7 +77,8 @@ const Profile = () => {
                 Name : Admin
               </h3>
               <div className="text-xs mt-0 mb-2 text-slate-400 font-bold uppercase">
-                Phone Number : 9876543210 <br /> Email : admin@admin.com
+                {/* Phone Number : 9876543210 <br /> Email : admin@admin.com */}
+                Please click on edit icon to change user name and password.
               </div>
             </div>
             {/* <div className="mt-6 py-6 border-t border-slate-200 text-center">
