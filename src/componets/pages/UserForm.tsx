@@ -314,39 +314,43 @@ const UserForm = () => {
   }, []);
 
   const onSubmit = async (values) => {
-    switch (btnClicked) {
-      case "save":
-        await addMembers(values);
-        return;
-      case "update":
-        await updateMembers(values);
-        return;
-      case "approve":
-        await approvalStatus(values, "MEMBER");
-        title = "Application Approved";
-        return;
-      case "member":
-        await approvalStatus(values, "MEMBER");
-        title = "Application Approved";
-        return;
-      case "executive":
-        await approvalStatus(values, "EXECUTIVE");
-        title = "Executives";
-        return;
-      case "enable":
-        await approvalStatus(values, "ENABLE");
-        title = "Application Approved";
-        return;
-      case "disable":
-        await approvalStatus(values, "DISABLE");
-        title = "Disabled Members";
-        return;
-      case "reject":
-        await approvalStatus(values, "REJECTED");
-        title = "Application Rejected";
-        return;
-      default:
-        return;
+    try {
+      switch (btnClicked) {
+        case "save":
+          await addMembers(values);
+          return;
+        case "update":
+          await updateMembers(values);
+          return;
+        case "approve":
+          await approvalStatus(values, "MEMBER");
+          title = "Application Approved";
+          return;
+        case "member":
+          await approvalStatus(values, "MEMBER");
+          title = "Application Approved";
+          return;
+        case "executive":
+          await approvalStatus(values, "EXECUTIVE");
+          title = "Executives";
+          return;
+        case "enable":
+          await approvalStatus(values, "ENABLE");
+          title = "Application Approved";
+          return;
+        case "disable":
+          await approvalStatus(values, "DISABLE");
+          title = "Disabled Members";
+          return;
+        case "reject":
+          await approvalStatus(values, "REJECTED");
+          title = "Application Rejected";
+          return;
+        default:
+          return;
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
