@@ -83,8 +83,6 @@ const validation = Yup.object({
   bloodGroup: Yup.string().required("Required"),
   qualification: Yup.string().required("Required"),
   profession: Yup.string().required("Required"),
-  referredBy: Yup.string(),
-  referredByName: Yup.string(),
   address: Yup.string()
     .min(3, "too short!")
     .max(256, "too long!")
@@ -106,29 +104,30 @@ const validation = Yup.object({
 
 type Initial = Yup.InferType<typeof validation>;
 
-const initialValues: Initial = {
-  firstAndLastName: "",
-  emailId: "",
-  parentsName: "",
-  mobileNumber: "",
-  dob: "",
-  gender: "",
-  bloodGroup: "",
-  qualification: "",
-  profession: "",
-  referredBy: "",
-  referredByName: "",
-  aadharcard: "",
-  aadharCardLink: "",
-  address: "",
-  city: "",
-  memberPhotoLink: "",
-  pancard: "",
-  panCardLink: "",
-  pincode: "",
-  state: "",
-  nationality: "INDIAN",
-};
+const initialValues: Initial & { referredBy: string; referredByName: string } =
+  {
+    firstAndLastName: "",
+    emailId: "",
+    parentsName: "",
+    mobileNumber: "",
+    dob: "",
+    gender: "",
+    bloodGroup: "",
+    qualification: "",
+    profession: "",
+    referredBy: "",
+    referredByName: "",
+    aadharcard: "",
+    aadharCardLink: "",
+    address: "",
+    city: "",
+    memberPhotoLink: "",
+    pancard: "",
+    panCardLink: "",
+    pincode: "",
+    state: "",
+    nationality: "INDIAN",
+  };
 
 const UserForm = () => {
   const store = useContext(Context);
@@ -146,12 +145,11 @@ const UserForm = () => {
 
   const navigate = useNavigate();
 
-  const title = store?.data.title;
+  let title = store?.data.title;
 
   const enableEdit = () => {
     setIsEdit(true);
   };
-  console.log(title);
 
   const approvalStatus = async (values, status) => {
     try {
@@ -245,7 +243,9 @@ const UserForm = () => {
       delete values.panCardLink;
       delete values.memberPhotoLink;
       formData.append("memberRegister", JSON.stringify(values));
+
       await memberRegister(formData);
+
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -289,6 +289,7 @@ const UserForm = () => {
       formData.append("memberRegister", JSON.stringify(values));
 
       await updateMember(formData);
+      setIsEdit(false);
       toast.success("member added successfully");
     } catch (err: unknown) {
       if (typeof err === "string") {
@@ -321,28 +322,33 @@ const UserForm = () => {
         await updateMembers(values);
         return;
       case "approve":
-        approvalStatus(values, "MEMBER");
+        await approvalStatus(values, "MEMBER");
+        title = "Application Approved";
         return;
       case "member":
-        approvalStatus(values, "MEMBER");
+        await approvalStatus(values, "MEMBER");
+        title = "Application Approved";
         return;
       case "executive":
-        approvalStatus(values, "EXECUTIVE");
+        await approvalStatus(values, "EXECUTIVE");
+        title = "Executives";
         return;
       case "enable":
-        approvalStatus(values, "ENABLE");
+        await approvalStatus(values, "ENABLE");
+        title = "Application Approved";
         return;
       case "disable":
-        approvalStatus(values, "DISABLE");
+        await approvalStatus(values, "DISABLE");
+        title = "Disabled Members";
         return;
       case "reject":
-        approvalStatus(values, "REJECTED");
+        await approvalStatus(values, "REJECTED");
+        title = "Application Rejected";
         return;
       default:
         return;
     }
   };
-  console.log(states);
 
   return (
     <Laytout>
@@ -692,8 +698,11 @@ const UserForm = () => {
               </Button>
               <Button
                 variant="save"
+                type="submit"
                 name="update"
-                onClick={() => setBtnClicked("update")}
+                onClick={() => {
+                  setBtnClicked("update");
+                }}
                 isVisible={isEdit && !addUserCategory.includes(title as string)}
                 // onClick={() => updateMembers(props.values)}
               >
