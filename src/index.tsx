@@ -23,14 +23,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider>
-    <ToastContainer
-      position="bottom-right"
-      newestOnTop={true}
-      closeOnClick
-      autoClose={2000}
-      transition={Zoom}
-    />
     <BrowserRouter>
+      <ToastContainer
+        position="bottom-right"
+        newestOnTop={true}
+        closeOnClick
+        autoClose={2000}
+        transition={Zoom}
+      />
       <Routes>
         <Route index path="/login" element={<Login />} />
         <Route path="/" element={<App />}></Route>

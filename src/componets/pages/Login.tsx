@@ -16,13 +16,24 @@ export default function Login() {
   const navigate = useNavigate();
 
   const onSubmit = async (values: Initial) => {
+    const toastId = toast.loading("loading...");
     try {
       const res = await login(values);
       localStorage.setItem("login", res.data.token);
       navigate("/");
-      toast.success("you are logged in");
+      toast.update(toastId, {
+        render: "Welcome!",
+        isLoading: false,
+        type: "success",
+        autoClose: 3000,
+      });
     } catch (err) {
-      toast.error("Failed");
+      toast.update(toastId, {
+        render: "Invalid Credentials!",
+        isLoading: false,
+        type: "error",
+        autoClose: 3000,
+      });
     }
   };
   return (
@@ -34,27 +45,30 @@ export default function Login() {
           </h5>
         </div>
         <Formik onSubmit={onSubmit} initialValues={initialValues}>
-          <Form className="flex justify-center items-center flex-col p-8">
-            <FormControl name="username" label="User Name" />
-            <FormControl name="password" label="Password" type="password" />
-            <div className="flex justify-between items-center gap-4 mb-4 w-full">
-              <div className="text-sm flex items-center">
-                {/* <input type="checkbox" className="mr-2" />
+          {({ isSubmitting }) => (
+            <Form className="flex justify-center items-center flex-col p-8">
+              <FormControl name="username" label="User Name" />
+              <FormControl name="password" label="Password" type="password" />
+              <div className="flex justify-between items-center gap-4 mb-4 w-full">
+                <div className="text-sm flex items-center">
+                  {/* <input type="checkbox" className="mr-2" />
                 <label>Remember me</label> */}
+                </div>
+                <div className="text-sm text-blue-500 cursor-pointer">
+                  Forgot Password?
+                </div>
               </div>
-              <div className="text-sm text-blue-500 cursor-pointer">
-                Forgot Password?
+              <div className="flex gap-4 flex-col w-full text-center">
+                <button
+                  className="bg-blue-500 hover:bg-blue-700 disabled:bg-gray-300 text-white font-bold w-full py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Login
+                </button>
               </div>
-            </div>
-            <div className="flex gap-4 flex-col w-full text-center">
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Login
-              </button>
-            </div>
-          </Form>
+            </Form>
+          )}
         </Formik>
       </div>
     </div>

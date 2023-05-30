@@ -152,12 +152,17 @@ const UserForm = () => {
   };
 
   const approvalStatus = async (values, status) => {
+    const toastId = toast.loading("loading...");
     try {
       const updated = await updateStatus({
         uhrsfMemberId: values.uhrsfMemberId,
         approvalStatus: status,
       });
-      toast.success(updated.data.message);
+      toast.update(toastId, {
+        render: updated.data.message,
+        type: "success",
+        isLoading: false,
+      });
     } catch (err: unknown) {
       if (typeof err === "string") {
         toast.error(err);
@@ -166,12 +171,13 @@ const UserForm = () => {
       } else if (err instanceof Error) {
         toast.error(err.message);
       }
+      toast.update(toastId, { isLoading: false });
     }
   };
 
   const getMemberDetails = async (memberId: string) => {
+    const loading = toast.loading("loading the user data...");
     try {
-      const loading = toast.loading("loading the user data...");
       const res = await getMemberDetailsById(memberId);
       toast.update(loading, {
         render: "Loaded",
@@ -190,6 +196,11 @@ const UserForm = () => {
       store?.action.setUserDetails(res.data.data);
     } catch (err) {
       console.log(err);
+      toast.update(loading, {
+        render: "Failed!",
+        type: "error",
+        isLoading: false,
+      });
     }
   };
 
@@ -260,35 +271,37 @@ const UserForm = () => {
   const updateMembers = async (values) => {
     try {
       const formData = new FormData();
+      const fieldData = { ...values };
 
-      console.log(values.aadharCardLink instanceof Object);
-      console.log(typeof values.aadharCardLink);
+      console.log(fieldData.aadharCardLink instanceof Object);
+      console.log(typeof fieldData.aadharCardLink);
 
-      if (values.aadharCardLink instanceof Object) {
-        formData.append("aadharCard", values.aadharCardLink);
+      if (fieldData.aadharCardLink instanceof Object) {
+        formData.append("aadharCard", fieldData.aadharCardLink);
       } else {
         formData.append("aadharCard", new Blob([new Uint8Array([])]));
       }
-      if (values.panCardLink instanceof Object) {
-        formData.append("pancard", values.panCardLink);
+      if (fieldData.panCardLink instanceof Object) {
+        formData.append("pancard", fieldData.panCardLink);
       } else {
         formData.append("pancard", new Blob([new Uint8Array([])]));
       }
-      if (values.memberPhotoLink instanceof Object) {
-        formData.append("memberPhoto", values.memberPhotoLink);
+      if (fieldData.memberPhotoLink instanceof Object) {
+        formData.append("memberPhoto", fieldData.memberPhotoLink);
       } else {
         formData.append("memberPhoto", new Blob([new Uint8Array([])]));
       }
 
-      delete values.temporaryMemberId;
-      delete values.status;
-      delete values.aadharCardLink;
-      delete values.panCardLink;
-      delete values.memberPhotoLink;
+      delete fieldData.temporaryMemberId;
+      delete fieldData.status;
+      delete fieldData.aadharCardLink;
+      delete fieldData.panCardLink;
+      delete fieldData.memberPhotoLink;
 
-      formData.append("memberRegister", JSON.stringify(values));
+      formData.append("memberRegister", JSON.stringify(fieldData));
 
       await updateMember(formData);
+      await getMemberDetails(store?.data.userDetails.uhrsfMemberId);
       setIsEdit(false);
       toast.success("member added successfully");
     } catch (err: unknown) {
@@ -484,7 +497,14 @@ const UserForm = () => {
                 {!isEdit ? (
                   <span
                     className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
-                    onClick={() => window.open(props.values?.aadharCardLink)}
+                    onClick={() => {
+                      if (props.values?.aadharCardLink instanceof Object) {
+                        window.open(
+                          URL.createObjectURL(props.values?.aadharCardLink)
+                        );
+                      }
+                      window.open(props.values?.aadharCardLink);
+                    }}
                   >
                     open
                   </span>
@@ -535,7 +555,14 @@ const UserForm = () => {
                 {!isEdit ? (
                   <span
                     className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
-                    onClick={() => window.open(props.values?.panCardLink)}
+                    onClick={() => {
+                      if (props.values?.panCardLink instanceof Object) {
+                        window.open(
+                          URL.createObjectURL(props.values?.panCardLink)
+                        );
+                      }
+                      window.open(props.values?.panCardLink);
+                    }}
                   >
                     open
                   </span>
@@ -585,7 +612,14 @@ const UserForm = () => {
                 {!isEdit ? (
                   <span
                     className="bg-gray-600 border rounded-md float-right text-white px-4 py-[10px]"
-                    onClick={() => window.open(props.values?.memberPhotoLink)}
+                    onClick={() => {
+                      if (props.values?.memberPhotoLink instanceof Object) {
+                        window.open(
+                          URL.createObjectURL(props.values?.memberPhotoLink)
+                        );
+                      }
+                      window.open(props.values?.memberPhotoLink);
+                    }}
                   >
                     open
                   </span>
