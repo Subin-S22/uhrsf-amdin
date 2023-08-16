@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const baseAxios = axios.create({
-  baseURL: "https://csnservernet.tech/uhrsf_dev/api/v1/uhrsf/",
+  baseURL: "https://backend.uhrsf.org/uhrsf_dev/api/v1/uhrsf/",
 });
 
 // Add a request interceptor
